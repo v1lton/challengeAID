@@ -24,6 +24,12 @@
 		49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C0E2870B55700E779AC /* ViewControllerFactory.swift */; };
 		49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C132870B67C00E779AC /* Resolver+Extensions.swift */; };
 		49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C152870B6EE00E779AC /* ViewControllerFactoryProtocol.swift */; };
+		49059C1E2870C58E00E779AC /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C1D2870C58E00E779AC /* Request.swift */; };
+		49059C202870C67800E779AC /* MarvelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C1F2870C67800E779AC /* MarvelRequest.swift */; };
+		49059C232870D67600E779AC /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C222870D67600E779AC /* Character.swift */; };
+		49059C252870ECA400E779AC /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C242870ECA400E779AC /* Comic.swift */; };
+		49059C272870F56E00E779AC /* NetworkingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C262870F56E00E779AC /* NetworkingOperation.swift */; };
+		49059C292870FE1600E779AC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C282870FE1600E779AC /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +70,12 @@
 		49059C0E2870B55700E779AC /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		49059C132870B67C00E779AC /* Resolver+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resolver+Extensions.swift"; sourceTree = "<group>"; };
 		49059C152870B6EE00E779AC /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
+		49059C1D2870C58E00E779AC /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		49059C1F2870C67800E779AC /* MarvelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelRequest.swift; sourceTree = "<group>"; };
+		49059C222870D67600E779AC /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		49059C242870ECA400E779AC /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		49059C262870F56E00E779AC /* NetworkingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingOperation.swift; sourceTree = "<group>"; };
+		49059C282870FE1600E779AC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +187,8 @@
 		49059BFD2870959200E779AC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				49059C182870C27000E779AC /* Request */,
+				49059C262870F56E00E779AC /* NetworkingOperation.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -182,6 +196,7 @@
 		49059BFE2870959800E779AC /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				49059C212870D53900E779AC /* Models */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -242,8 +257,27 @@
 			isa = PBXGroup;
 			children = (
 				49059C132870B67C00E779AC /* Resolver+Extensions.swift */,
+				49059C282870FE1600E779AC /* String+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		49059C182870C27000E779AC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				49059C1D2870C58E00E779AC /* Request.swift */,
+				49059C1F2870C67800E779AC /* MarvelRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		49059C212870D53900E779AC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				49059C222870D67600E779AC /* Character.swift */,
+				49059C242870ECA400E779AC /* Comic.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,14 +417,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */,
+				49059C1E2870C58E00E779AC /* Request.swift in Sources */,
 				49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */,
 				49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */,
 				49059C0B2870B40000E779AC /* AppAssembly.swift in Sources */,
 				49059BCB2870944600E779AC /* HomeViewController.swift in Sources */,
 				49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */,
+				49059C252870ECA400E779AC /* Comic.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,
 				49059C042870A9FD00E779AC /* Coordinator.swift in Sources */,
+				49059C272870F56E00E779AC /* NetworkingOperation.swift in Sources */,
+				49059C232870D67600E779AC /* Character.swift in Sources */,
+				49059C292870FE1600E779AC /* String+Extensions.swift in Sources */,
 				49059C0D2870B43900E779AC /* DependencyProvider.swift in Sources */,
+				49059C202870C67800E779AC /* MarvelRequest.swift in Sources */,
 				49059BD12870944600E779AC /* ChallengeAID.xcdatamodeld in Sources */,
 				49059BC92870944600E779AC /* SceneDelegate.swift in Sources */,
 			);
