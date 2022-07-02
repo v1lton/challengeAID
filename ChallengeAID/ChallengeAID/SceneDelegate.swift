@@ -12,7 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - PUBLIC PROPERTIES
     
     var window: UIWindow?
-    var coordinator: AppCoordinator?
+    var coordinator: Coordinator?
+    let dependecyProvider = DependencyProvider.shared
 
     // MARK: - PUBLIC FUNCTIONS
     
@@ -30,7 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - PRIVATE FUNCTIONS
     
     private func makeCoordinator(with navigationController: UINavigationController) {
-        self.coordinator = AppCoordinator(navigationController: navigationController)
+        self.coordinator = dependecyProvider.container.resolveUnwrapping(Coordinator.self,
+                                                                         argument: navigationController)
         self.coordinator?.start()
     }
     
