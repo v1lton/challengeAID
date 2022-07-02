@@ -16,6 +16,8 @@
 		49059BE12870944700E779AC /* ChallengeAIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BE02870944700E779AC /* ChallengeAIDTests.swift */; };
 		49059BEB2870944700E779AC /* ChallengeAIDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BEA2870944700E779AC /* ChallengeAIDUITests.swift */; };
 		49059BED2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BEC2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift */; };
+		49059C042870A9FD00E779AC /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C032870A9FD00E779AC /* Coordinator.swift */; };
+		49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C052870AA1500E779AC /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		49059BE62870944700E779AC /* ChallengeAIDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChallengeAIDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49059BEA2870944700E779AC /* ChallengeAIDUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAIDUITests.swift; sourceTree = "<group>"; };
 		49059BEC2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAIDUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		49059C032870A9FD00E779AC /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		49059C052870AA1500E779AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,8 @@
 		49059C01287095BB00E779AC /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				49059C032870A9FD00E779AC /* Coordinator.swift */,
+				49059C052870AA1500E779AC /* AppCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -329,8 +335,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */,
 				49059BCB2870944600E779AC /* HomeViewController.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,
+				49059C042870A9FD00E779AC /* Coordinator.swift in Sources */,
 				49059BD12870944600E779AC /* ChallengeAID.xcdatamodeld in Sources */,
 				49059BC92870944600E779AC /* SceneDelegate.swift in Sources */,
 			);
