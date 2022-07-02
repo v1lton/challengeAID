@@ -16,6 +16,14 @@
 		49059BE12870944700E779AC /* ChallengeAIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BE02870944700E779AC /* ChallengeAIDTests.swift */; };
 		49059BEB2870944700E779AC /* ChallengeAIDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BEA2870944700E779AC /* ChallengeAIDUITests.swift */; };
 		49059BED2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059BEC2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift */; };
+		49059C042870A9FD00E779AC /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C032870A9FD00E779AC /* Coordinator.swift */; };
+		49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C052870AA1500E779AC /* AppCoordinator.swift */; };
+		49059C092870B33400E779AC /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C082870B33400E779AC /* Swinject */; };
+		49059C0B2870B40000E779AC /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C0A2870B40000E779AC /* AppAssembly.swift */; };
+		49059C0D2870B43900E779AC /* DependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C0C2870B43900E779AC /* DependencyProvider.swift */; };
+		49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C0E2870B55700E779AC /* ViewControllerFactory.swift */; };
+		49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C132870B67C00E779AC /* Resolver+Extensions.swift */; };
+		49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C152870B6EE00E779AC /* ViewControllerFactoryProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,13 @@
 		49059BE62870944700E779AC /* ChallengeAIDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChallengeAIDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49059BEA2870944700E779AC /* ChallengeAIDUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAIDUITests.swift; sourceTree = "<group>"; };
 		49059BEC2870944700E779AC /* ChallengeAIDUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAIDUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		49059C032870A9FD00E779AC /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		49059C052870AA1500E779AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		49059C0A2870B40000E779AC /* AppAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAssembly.swift; sourceTree = "<group>"; };
+		49059C0C2870B43900E779AC /* DependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyProvider.swift; sourceTree = "<group>"; };
+		49059C0E2870B55700E779AC /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		49059C132870B67C00E779AC /* Resolver+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resolver+Extensions.swift"; sourceTree = "<group>"; };
+		49059C152870B6EE00E779AC /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49059C092870B33400E779AC /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +145,7 @@
 		49059BFA2870956800E779AC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				49059C122870B66E00E779AC /* Extensions */,
 				49059BFF2870959E00E779AC /* DependencyInjection */,
 				49059BFE2870959800E779AC /* Domain */,
 				49059BFD2870959200E779AC /* Services */,
@@ -149,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				49059BD42870944700E779AC /* LaunchScreen.storyboard */,
-				49059C01287095BB00E779AC /* Coordinator */,
+				49059C01287095BB00E779AC /* Navigation */,
 				49059C00287095B000E779AC /* Features */,
 			);
 			path = UI;
@@ -172,6 +189,8 @@
 		49059BFF2870959E00E779AC /* DependencyInjection */ = {
 			isa = PBXGroup;
 			children = (
+				49059C0A2870B40000E779AC /* AppAssembly.swift */,
+				49059C0C2870B43900E779AC /* DependencyProvider.swift */,
 			);
 			path = DependencyInjection;
 			sourceTree = "<group>";
@@ -184,11 +203,13 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		49059C01287095BB00E779AC /* Coordinator */ = {
+		49059C01287095BB00E779AC /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				49059C112870B58E00E779AC /* Coordinator */,
+				49059C102870B58600E779AC /* Factory */,
 			);
-			path = Coordinator;
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		49059C02287095D800E779AC /* Home */ = {
@@ -197,6 +218,32 @@
 				49059BCA2870944600E779AC /* HomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		49059C102870B58600E779AC /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				49059C0E2870B55700E779AC /* ViewControllerFactory.swift */,
+				49059C152870B6EE00E779AC /* ViewControllerFactoryProtocol.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		49059C112870B58E00E779AC /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				49059C032870A9FD00E779AC /* Coordinator.swift */,
+				49059C052870AA1500E779AC /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		49059C122870B66E00E779AC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				49059C132870B67C00E779AC /* Resolver+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +262,9 @@
 			dependencies = (
 			);
 			name = ChallengeAID;
+			packageProductDependencies = (
+				49059C082870B33400E779AC /* Swinject */,
+			);
 			productName = ChallengeAID;
 			productReference = 49059BC32870944600E779AC /* ChallengeAID.app */;
 			productType = "com.apple.product-type.application";
@@ -287,6 +337,9 @@
 				Base,
 			);
 			mainGroup = 49059BBA2870944600E779AC;
+			packageReferences = (
+				49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			productRefGroup = 49059BC42870944600E779AC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -329,8 +382,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */,
+				49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */,
+				49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */,
+				49059C0B2870B40000E779AC /* AppAssembly.swift in Sources */,
 				49059BCB2870944600E779AC /* HomeViewController.swift in Sources */,
+				49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,
+				49059C042870A9FD00E779AC /* Coordinator.swift in Sources */,
+				49059C0D2870B43900E779AC /* DependencyProvider.swift in Sources */,
 				49059BD12870944600E779AC /* ChallengeAID.xcdatamodeld in Sources */,
 				49059BC92870944600E779AC /* SceneDelegate.swift in Sources */,
 			);
@@ -686,6 +746,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		49059C082870B33400E779AC /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		49059BCF2870944600E779AC /* ChallengeAID.xcdatamodeld */ = {
