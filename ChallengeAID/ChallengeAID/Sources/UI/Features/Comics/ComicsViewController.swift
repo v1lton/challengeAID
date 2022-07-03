@@ -5,17 +5,28 @@
 //  Created by Wilton Ramos da Silva on 02/07/22.
 //
 
+import CoreData
 import RxSwift
 import UIKit
 
 class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
- 
+    
     // MARK: - PRIVATE PROPERTIES
     
     private let viewModel: ComicsViewModelProtocol
     private let disposeBag = DisposeBag()
+    private let reuseIdentifier = "ComicsCell"
     
     // MARK: - UI
+    
+    private lazy var comicsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
     private let label: UILabel = {
         let label = UILabel(frame: .zero)
@@ -47,17 +58,19 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     // MARK: - SETUP
     
     private func setupView() {
-        view.backgroundColor = .red
+        view.backgroundColor = .white
     }
     
     private func buildViewHierarchy() {
-        view.addSubview(label)
+        view.addSubview(comicsTableView)
     }
     
     private func constraintUI() {
         NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            comicsTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            comicsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            comicsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            comicsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
     
@@ -86,10 +99,29 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     private func handleLoading() { }
     
     private func handleContent(_ content: [Comic]) {
-        label.text = content[0].title
-    }
+        comicsTableView.reloadData()    }
     
     private func handleError(_ error: Error) {
         print(error.localizedDescription)
     }
 }
+
+extension ComicsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.saveUserComic(from: indexPath.row)
+    }
+}
+
+extension ComicsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.getComics()?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        let comics = viewModel.getComics()
+        cell.textLabel?.text = comics?[indexPath.row].title
+        return cell
+    }
+}
+

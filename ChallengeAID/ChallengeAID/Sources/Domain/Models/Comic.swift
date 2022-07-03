@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ComicResponse: Codable {
+public struct ComicResponse: Codable {
     let code: Int?
     let status: String?
     let copyright: String?
@@ -27,7 +27,7 @@ struct ComicResponse: Codable {
     }
 }
 
-struct ComicDataContainer: Codable {
+public struct ComicDataContainer: Codable {
     let offset: Int?
     let limit: Int?
     let total: Int?
@@ -43,7 +43,7 @@ struct ComicDataContainer: Codable {
     }
 }
 
-struct Comic: Codable {
+public struct Comic: Codable {
     let id: Int?
     let digitalId: Int?
     let title: String?
@@ -53,7 +53,7 @@ struct Comic: Codable {
     let creators: CreatorList?
 }
 
-struct Image: Codable {
+public struct Image: Codable {
     let path: String?
     let imageExtension: String?
     
@@ -63,21 +63,21 @@ struct Image: Codable {
     }
 }
 
-struct CreatorList: Codable {
+public struct CreatorList: Codable {
     let available: Int?
     let returned: Int?
     let collectionURI: String?
     let items: [CharacterSummary]?
 }
 
-struct CharacterList: Codable {
+public struct CharacterList: Codable {
     let available: Int?
     let returned: Int?
     let collectionURI: String?
     let items: [CharacterSummary]?
 }
 
-struct CharacterSummary: Codable {
+public struct CharacterSummary: Codable {
     let resourceURI: String?
     let name: String?
     let role: String?

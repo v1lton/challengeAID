@@ -16,4 +16,6 @@ protocol ComicsViewModelProtocol {
     // MARK: - FUNCTIONS
     
     func retrieveComics()
+    func getComics() -> [Comic]?
+    func saveUserComic(from index: Int)
 }

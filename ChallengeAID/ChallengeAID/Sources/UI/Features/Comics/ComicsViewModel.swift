@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import CoreData
 
 class ComicsViewModel: ComicsViewModelProtocol {
     
@@ -15,6 +16,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - PRIVATE PROPERTIES
     
+    private let comicManager: ComicManagerProtocol
     private var model: [Comic]?
     private let disposeBag = DisposeBag()
     
@@ -24,7 +26,20 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - INITIALIZERS
     
-    init() { }
+    init(comicManager: ComicManagerProtocol) {
+        self.comicManager = comicManager
+    }
+    
+    // MARK: - PUBLIC METHODS
+    
+    func getComics() -> [Comic]? {
+        return model
+    }
+    
+    func saveUserComic(from index: Int) {
+        guard let comic = model?[index] else { return }
+        comicManager.create(comic)
+    }
     
     // MARK: - PRIVATE METHODS
     

@@ -36,6 +36,8 @@
 		49059C36287113F300E779AC /* ComicsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C35287113F300E779AC /* ComicsViewState.swift */; };
 		49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */; };
 		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
+		49059C3F287213BC00E779AC /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C3E287213BC00E779AC /* EntityManager.swift */; };
+		49059C4128721C4E00E779AC /* ComicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		49059C33287113E600E779AC /* ComicsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewModelProtocol.swift; sourceTree = "<group>"; };
 		49059C35287113F300E779AC /* ComicsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewState.swift; sourceTree = "<group>"; };
 		49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerProtocol.swift; sourceTree = "<group>"; };
+		49059C3E287213BC00E779AC /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		49059C4028721C4E00E779AC /* ComicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,7 @@
 		49059BFA2870956800E779AC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				49059C3C2872139400E779AC /* CoreData */,
 				49059BFF2870959E00E779AC /* DependencyInjection */,
 				49059BFE2870959800E779AC /* Domain */,
 				49059BFD2870959200E779AC /* Services */,
@@ -295,6 +300,23 @@
 				49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */,
 			);
 			path = Comics;
+			sourceTree = "<group>";
+		};
+		49059C3C2872139400E779AC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				49059C3D2872139D00E779AC /* Managers */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		49059C3D2872139D00E779AC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				49059C3E287213BC00E779AC /* EntityManager.swift */,
+				49059C4028721C4E00E779AC /* ComicManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,8 +465,10 @@
 				49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */,
 				49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */,
 				49059C0B2870B40000E779AC /* AppAssembly.swift in Sources */,
+				49059C3F287213BC00E779AC /* EntityManager.swift in Sources */,
 				49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */,
 				49059C34287113E600E779AC /* ComicsViewModelProtocol.swift in Sources */,
+				49059C4128721C4E00E779AC /* ComicManager.swift in Sources */,
 				49059C252870ECA400E779AC /* Comic.swift in Sources */,
 				49059C32287113D400E779AC /* ComicsViewControllerDelegate.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,

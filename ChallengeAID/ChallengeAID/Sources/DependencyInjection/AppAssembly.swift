@@ -26,10 +26,17 @@ class AppAssembly: Assembly {
                                   factory: factory)
         }
         
+        // MARK: Entity Managers
+        
+        container.register(ComicManagerProtocol.self) { _ in
+            return ComicManager()
+        }
+        
         // MARK: - ComicsViewController
         
-        container.register(ComicsViewModelProtocol.self) { _ in
-            return ComicsViewModel()
+        container.register(ComicsViewModelProtocol.self) { resolver in
+            let comicManager = resolver.resolveUnwrapping(ComicManagerProtocol.self)
+            return ComicsViewModel(comicManager: comicManager)
         }
         
         container.register(ComicsViewController.self) { resolver in
