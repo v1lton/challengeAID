@@ -22,7 +22,7 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     
     // MARK: - PUBLIC FUNCTIONS
     
-    public func makeHomeViewController() -> HomeViewController {
-        return resolver.resolveUnwrapping(HomeViewController.self)
+    public func makeComicsViewController() -> ComicsViewController {
+        return resolver.resolveUnwrapping(ComicsViewController.self)
     }
 }

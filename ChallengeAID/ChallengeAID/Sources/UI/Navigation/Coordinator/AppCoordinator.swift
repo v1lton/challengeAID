@@ -27,7 +27,7 @@ class AppCoordinator: Coordinator {
     // MARK: - PUBLIC FUNCTIONS
     
     public func start() {
-        let homeViewController = factory.makeHomeViewController()
-        navigationController.pushViewController(homeViewController, animated: false)
+        let comicsViewController = factory.makeComicsViewController()
+        navigationController.pushViewController(comicsViewController, animated: false)
     }
 }

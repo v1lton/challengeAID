@@ -62,7 +62,7 @@ struct MarvelRequest: Request {
             return [URLQueryItem(name: "ts", value: timestamp),
                     URLQueryItem(name: "hash", value: hash),
                     URLQueryItem(name: "apikey", value: apiKey),
-                    URLQueryItem(name: "limit", value: "2")]
+                    URLQueryItem(name: "limit", value: "20")]
         case .characters:
             return [URLQueryItem(name: "ts", value: timestamp),
                     URLQueryItem(name: "hash", value: hash),
