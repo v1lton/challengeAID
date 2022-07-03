@@ -35,6 +35,7 @@
 		49059C34287113E600E779AC /* ComicsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C33287113E600E779AC /* ComicsViewModelProtocol.swift */; };
 		49059C36287113F300E779AC /* ComicsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C35287113F300E779AC /* ComicsViewState.swift */; };
 		49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */; };
+		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49059C3B2871EB2500E779AC /* RxSwift in Frameworks */,
 				49059C092870B33400E779AC /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +315,7 @@
 			name = ChallengeAID;
 			packageProductDependencies = (
 				49059C082870B33400E779AC /* Swinject */,
+				49059C3A2871EB2500E779AC /* RxSwift */,
 			);
 			productName = ChallengeAID;
 			productReference = 49059BC32870944600E779AC /* ChallengeAID.app */;
@@ -388,6 +391,7 @@
 			mainGroup = 49059BBA2870944600E779AC;
 			packageReferences = (
 				49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */,
+				49059C392871EB2500E779AC /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 49059BC42870944600E779AC /* Products */;
 			projectDirPath = "";
@@ -816,6 +820,14 @@
 				minimumVersion = 2.8.0;
 			};
 		};
+		49059C392871EB2500E779AC /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -823,6 +835,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		49059C3A2871EB2500E779AC /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49059C392871EB2500E779AC /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

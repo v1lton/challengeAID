@@ -5,7 +5,7 @@
 //  Created by Wilton Ramos da Silva on 02/07/22.
 //
 
-import Combine
+import RxSwift
 
 class ComicsViewModel: ComicsViewModelProtocol {
     
@@ -16,6 +16,11 @@ class ComicsViewModel: ComicsViewModelProtocol {
     // MARK: - PRIVATE PROPERTIES
     
     private var model: [Comic]?
+    private let disposeBag = DisposeBag()
+    
+    // MARK: - PUBLIC PROPERTIES
+    
+    var viewState: BehaviorSubject<ComicsViewState> = .init(value: .loading)
     
     // MARK: - INITIALIZERS
     
@@ -46,8 +51,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     private func handleSuccess(_ comics: [Comic]?) {
         guard let comics =  comics else { return handleEmptyComics() }
         model = comics
-        print("Success!!")
-        print(model)
+        viewState.onNext(.content(comics))
     }
     
     private func handleEmptyComics() { }

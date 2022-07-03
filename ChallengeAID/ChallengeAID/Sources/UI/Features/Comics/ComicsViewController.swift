@@ -5,7 +5,7 @@
 //  Created by Wilton Ramos da Silva on 02/07/22.
 //
 
-import Combine
+import RxSwift
 import UIKit
 
 class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
@@ -13,6 +13,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     // MARK: - PRIVATE PROPERTIES
     
     private let viewModel: ComicsViewModelProtocol
+    private let disposeBag = DisposeBag()
     
     // MARK: - UI
     
@@ -40,6 +41,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         setupView()
         buildViewHierarchy()
         constraintUI()
+        bindObservables()
     }
     
     // MARK: - SETUP
@@ -57,5 +59,37 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    private func bindObservables() {
+        viewModel.viewState
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] state in
+                self?.handleViewState(state)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - HANDLERS
+    
+    private func handleViewState(_ viewState: ComicsViewState) {
+        switch viewState {
+        case .loading:
+            handleLoading()
+        case .content(let content):
+            handleContent(content)
+        case .error(let error):
+            handleError(error)
+        }
+    }
+    
+    private func handleLoading() { }
+    
+    private func handleContent(_ content: [Comic]) {
+        label.text = content[0].title
+    }
+    
+    private func handleError(_ error: Error) {
+        print(error.localizedDescription)
     }
 }
