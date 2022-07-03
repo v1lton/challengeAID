@@ -169,7 +169,6 @@
 		49059BFA2870956800E779AC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				49059C122870B66E00E779AC /* Extensions */,
 				49059BFF2870959E00E779AC /* DependencyInjection */,
 				49059BFE2870959800E779AC /* Domain */,
 				49059BFD2870959200E779AC /* Services */,
@@ -182,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				49059BD22870944700E779AC /* Assets.xcassets */,
+				49059C122870B66E00E779AC /* Extensions */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
