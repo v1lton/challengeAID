@@ -34,7 +34,7 @@ class FavoritesViewModel: FavoritesViewModelType {
     
     func getComic(at index: Int) -> ComicModel? {
         guard let comics = getComics() else { return nil}
-        if index < comics.count - 1 {
+        if index < comics.count  {
             return comics[index]
         }
         return nil
