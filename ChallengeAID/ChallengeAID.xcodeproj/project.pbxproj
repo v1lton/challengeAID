@@ -37,7 +37,7 @@
 		49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */; };
 		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
 		49059C3F287213BC00E779AC /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C3E287213BC00E779AC /* EntityManager.swift */; };
-		49059C4128721C4E00E779AC /* ComicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicManager.swift */; };
+		49059C4128721C4E00E779AC /* ComicObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicObjectManager.swift */; };
 		49059C44287229A000E779AC /* ComicsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C43287229A000E779AC /* ComicsModel.swift */; };
 		49059C4828722FB400E779AC /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4728722FB400E779AC /* DetailsViewController.swift */; };
 		49059C4A28722FBC00E779AC /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4928722FBC00E779AC /* DetailsViewModel.swift */; };
@@ -100,7 +100,7 @@
 		49059C35287113F300E779AC /* ComicsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewState.swift; sourceTree = "<group>"; };
 		49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerProtocol.swift; sourceTree = "<group>"; };
 		49059C3E287213BC00E779AC /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
-		49059C4028721C4E00E779AC /* ComicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicManager.swift; sourceTree = "<group>"; };
+		49059C4028721C4E00E779AC /* ComicObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicObjectManager.swift; sourceTree = "<group>"; };
 		49059C43287229A000E779AC /* ComicsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsModel.swift; sourceTree = "<group>"; };
 		49059C4728722FB400E779AC /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		49059C4928722FBC00E779AC /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				49059C3E287213BC00E779AC /* EntityManager.swift */,
-				49059C4028721C4E00E779AC /* ComicManager.swift */,
+				49059C4028721C4E00E779AC /* ComicObjectManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -549,7 +549,7 @@
 				49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */,
 				49059C34287113E600E779AC /* ComicsViewModelProtocol.swift in Sources */,
 				49059C4828722FB400E779AC /* DetailsViewController.swift in Sources */,
-				49059C4128721C4E00E779AC /* ComicManager.swift in Sources */,
+				49059C4128721C4E00E779AC /* ComicObjectManager.swift in Sources */,
 				49059C252870ECA400E779AC /* Comic.swift in Sources */,
 				49059C32287113D400E779AC /* ComicsViewControllerDelegate.swift in Sources */,
 				498106B728730F2200E1751C /* Observable+Extensions.swift in Sources */,

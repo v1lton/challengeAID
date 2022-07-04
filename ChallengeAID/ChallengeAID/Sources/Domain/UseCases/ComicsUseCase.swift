@@ -8,24 +8,25 @@
 import RxSwift
 
 protocol ComicsUseCaseType {
-    func execute(with requestModel: ComicsRequestModel) -> Observable<Result<[Comic]?, Error>>
+    func execute(with requestModel: ComicsRequestModel) -> Observable<Result<[ComicManagedObject]?, Error>>
 }
 
 class ComicsUseCase: ComicsUseCaseType {
     
     // MARK: - ALIASES
     
-    typealias UseCaseEventType = Result<[Comic]?, Error>
+    typealias UseCaseEventType = Result<[ComicManagedObject]?, Error>
     typealias ServiceReturningType = Result<ComicsResponse, Error>
     
     // MARK: - PRIVATE PROPERTIES
-    
+    private let comicObjectManager: ComicObjectManagerType
     private let networking: NetworkingOperationProtocol
     
     // MARK: - INITIALIZERS
     
-    init(networking: NetworkingOperationProtocol) {
+    init(networking: NetworkingOperationProtocol, comicObjectManager: ComicObjectManagerType) {
         self.networking = networking
+        self.comicObjectManager = comicObjectManager
     }
     
     // MARK: - PUBLIC FUNCTIONS
@@ -63,7 +64,10 @@ class ComicsUseCase: ComicsUseCaseType {
     
     private func handleSuccess(_ data: ComicsResponse) -> UseCaseEventType {
         let comics = data.data?.results
-        return .success(comics)
+        let comicObjects: [ComicManagedObject]? = comics?.compactMap({ comic in
+            return comicObjectManager.create(from: comic)
+        })
+        return .success(comicObjects)
     }
     
     private func handleError(_ error: Error) -> UseCaseEventType {

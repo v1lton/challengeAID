@@ -6,17 +6,18 @@
 //
 
 import CoreData
+import UIKit
 
-public protocol ComicManagerProtocol: EntityManagerProtocol {
-    func create(_ comic: Comic)
+public protocol ComicObjectManagerType: EntityManagerProtocol {
+    func create(from comic: Comic) -> ComicManagedObject?
     func fetchAll() -> [UserComic]?
 }
 
-final class ComicManager: EntityManager {
+final class ComicObjectManager: EntityManager {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let entityName = "UserComic"
+    private let entityName = "ComicManagedObject"
     
     // MARK: - PRIVATE FUNCTIONS
     
@@ -29,22 +30,23 @@ final class ComicManager: EntityManager {
     }
 }
 
-extension ComicManager: ComicManagerProtocol {
+extension ComicObjectManager: ComicObjectManagerType {
     
     // MARK: - PUBLIC FUNCTIONS
     
-    public func create(_ comic: Comic) {
+    public func create(from comic: Comic) -> ComicManagedObject? {
         let comicObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: coreDataContext)
-        
-        guard let comic = comicObject as? UserComic else {
-            print("Could not find UserComic class")
-            return
+        guard let object = comicObject as? ComicManagedObject,
+              let comicId = comic.id else {
+            print("Could not create entity \(entityName)")
+            return nil
         }
-        
-        comic.id = UUID()
-        comic.title = comic.title
-        comic.comicDescription = comic.description
-        saveContext()
+        object.id = String(comicId)
+        object.title = comic.title
+        object.comicDescription = comic.description
+        object.imagePath = comic.images?.first?.path
+        object.imageExtension = comic.images?.first?.imageExtension
+        return object
     }
     
     public func fetchAll() -> [UserComic]? {
@@ -58,4 +60,3 @@ extension ComicManager: ComicManagerProtocol {
         }
     }
 }
-

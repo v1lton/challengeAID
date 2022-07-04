@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ComicManagedObject" representedClassName="ComicManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="comicDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="imageExtension" optional="YES" attributeType="String"/>
+        <attribute name="imagePath" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="characters" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserComic" inverseName="chraracters" inverseEntity="UserComic"/>
-        <relationship name="creators" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserComic" inverseName="creators" inverseEntity="UserComic"/>
+        <relationship name="characters" optional="YES" maxCount="1" deletionRule="Nullify"/>
+        <relationship name="creators" optional="YES" maxCount="1" deletionRule="Nullify"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserComic" inverseName="favorites" inverseEntity="UserComic"/>
-    </entity>
-    <entity name="UserComic" representedClassName="UserComic" syncable="YES" codeGenerationType="class">
-        <attribute name="comicDescription" optional="YES" attributeType="String"/>
-        <attribute name="dateSaved" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="image" optional="YES" attributeType="Binary"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="chraracters" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="characters" inverseEntity="Person"/>
-        <relationship name="creators" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="creators" inverseEntity="Person"/>
-        <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="favorites" inverseEntity="User"/>
+        <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify"/>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="UserComic" positionX="-54" positionY="-9" width="128" height="149"/>
         <element name="Person" positionX="-36" positionY="45" width="128" height="74"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="ComicManagedObject" positionX="-54" positionY="54" width="128" height="104"/>
     </elements>
 </model>

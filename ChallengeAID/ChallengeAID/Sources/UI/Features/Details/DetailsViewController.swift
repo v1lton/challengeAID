@@ -63,8 +63,9 @@ class DetailsViewController: UIViewController {
     
     private func setImage() {
         print("cheguei")
-        guard let imageUrl = viewModel.getComic().images?.first else { return }
-        let fullPath = "\(imageUrl.path ?? "")/portrait_fantastic.\(imageUrl.imageExtension ?? "")"
+        guard let imagePath = viewModel.getComic().imagePath,
+              let imageExtension = viewModel.getComic().imageExtension else { return }
+        let fullPath = "\(imagePath)/portrait_fantastic.\(imageExtension)"
         print(fullPath)
         imageView.sd_setImage(with: URL(string: fullPath))
     }

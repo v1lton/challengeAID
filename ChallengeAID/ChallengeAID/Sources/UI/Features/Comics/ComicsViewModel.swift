@@ -10,16 +10,12 @@ import CoreData
 
 class ComicsViewModel: ComicsViewModelProtocol {
     
-    // MARK: - ALIASES
-    
-    typealias UseCaseEventType = Result<[Comic], Error>
-    typealias ServiceReturningType = Result<ComicsResponse, Error>
-    
     // MARK: - PRIVATE PROPERTIES
     
-    private let comicManager: ComicManagerProtocol
+    private let comicManager: ComicObjectManagerType
     private let comicsUseCase: ComicsUseCaseType
-    private var model: [Comic]?
+    
+    private var model: [ComicManagedObject]?
     private let disposeBag = DisposeBag()
     
     // MARK: - PUBLIC PROPERTIES
@@ -29,21 +25,18 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - INITIALIZERS
     
-    init(comicManager: ComicManagerProtocol, comicsUseCase: ComicsUseCaseType) {
+    init(comicManager: ComicObjectManagerType, comicsUseCase: ComicsUseCaseType) {
         self.comicManager = comicManager
         self.comicsUseCase = comicsUseCase
     }
     
     // MARK: - PUBLIC METHODS
     
-    func getComics() -> [Comic]? {
+    func getComics() -> [ComicManagedObject]? {
         return model
     }
     
-    func saveUserComic(from index: Int) {
-        guard let comic = model?[index] else { return }
-        comicManager.create(comic)
-    }
+    func saveUserComic(from index: Int) { }
     
     func retrieveComics(pagination: Bool) {
         if pagination {
@@ -52,13 +45,14 @@ class ComicsViewModel: ComicsViewModelProtocol {
         let offset = !pagination ? 0 : (model?.count ?? 0 + 1)
         comicsUseCase.execute(with: .init(offset: offset))
             .subscribeOnMainDisposed(by: disposeBag) { [weak self] result in
+                self?.isPaginating = false
                 self?.handleRetrieveComics(result)
             }
     }
     
     // MARK: - HANDLERS
     
-    private func handleRetrieveComics(_ response: Result<[Comic]?, Error>) {
+    private func handleRetrieveComics(_ response: Result<[ComicManagedObject]?, Error>) {
         switch response {
         case .success(let comics):
             handleSuccess(comics)
@@ -67,7 +61,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
         }
     }
     
-    private func handleSuccess(_ comics: [Comic]?) {
+    private func handleSuccess(_ comics: [ComicManagedObject]?) {
         guard let comics =  comics else { return handleEmptyComics() }
         if model == nil {
             model = comics

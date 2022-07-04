@@ -32,23 +32,24 @@ class AppAssembly: Assembly {
             return NetworkingOperation()
         }
         
+        // MARK: Entity Managers
+        
+        container.register(ComicObjectManagerType.self) { _ in
+            return ComicObjectManager()
+        }
+        
         // MARK: - Use Cases
         
         container.register(ComicsUseCaseType.self) { resolver in
             let networking = resolver.resolveUnwrapping(NetworkingOperationProtocol.self)
-            return ComicsUseCase(networking: networking)
+            let comicObjectManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
+            return ComicsUseCase(networking: networking, comicObjectManager: comicObjectManager)
         }
-        
-        // MARK: Entity Managers
-        
-        container.register(ComicManagerProtocol.self) { _ in
-            return ComicManager()
-        }
-        
+
         // MARK: - ComicsViewController
         
         container.register(ComicsViewModelProtocol.self) { resolver in
-            let comicManager = resolver.resolveUnwrapping(ComicManagerProtocol.self)
+            let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
             let useCase = resolver.resolveUnwrapping(ComicsUseCaseType.self)
             return ComicsViewModel(comicManager: comicManager, comicsUseCase: useCase)
         }

@@ -6,9 +6,9 @@
 //
 
 struct DetailsModel {
-    let comic: Comic
+    let comic: ComicManagedObject
     
-    init(comic: Comic) {
+    init(comic: ComicManagedObject) {
         self.comic = comic
     }
 }

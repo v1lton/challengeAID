@@ -34,7 +34,7 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: ComicsViewControllerDelegate {
-    func comicsViewController(didTapComic comic: Comic) {
+    func comicsViewController(didTapComic comic: ComicManagedObject) {
         let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
         navigationController.pushViewController(detailsViewController, animated: true)
     }
