@@ -12,7 +12,7 @@ struct MarvelRequest: Request {
     // MARK: - CASES
     
     enum Req {
-        case comics(model: ComicRequest)
+        case comics(model: ComicsRequestModel)
         case characters
     }
     

@@ -12,11 +12,13 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - ALIASES
     
-    typealias ComicsResponse = Result<ComicResponse, Error>
+    typealias UseCaseEventType = Result<[Comic], Error>
+    typealias ServiceReturningType = Result<ComicsResponse, Error>
     
     // MARK: - PRIVATE PROPERTIES
     
     private let comicManager: ComicManagerProtocol
+    private let comicsUseCase: ComicsUseCaseType
     private var model: [Comic]?
     private let disposeBag = DisposeBag()
     
@@ -27,8 +29,9 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - INITIALIZERS
     
-    init(comicManager: ComicManagerProtocol) {
+    init(comicManager: ComicManagerProtocol, comicsUseCase: ComicsUseCaseType) {
         self.comicManager = comicManager
+        self.comicsUseCase = comicsUseCase
     }
     
     // MARK: - PUBLIC METHODS
@@ -42,28 +45,23 @@ class ComicsViewModel: ComicsViewModelProtocol {
         comicManager.create(comic)
     }
     
-    // MARK: - PRIVATE METHODS
-    //TODO: fix marks
     func retrieveComics(pagination: Bool) {
         if pagination {
             isPaginating = true
         }
-        let networking = NetworkingOperation()
         let offset = !pagination ? 0 : (model?.count ?? 0 + 1)
-        let request = MarvelRequest(cases: .comics(model: .init(offset: offset)))
-        
-        networking.request(request: request) { [weak self] (response: ComicsResponse) in
-            self?.isPaginating = false
-            self?.handleRetrieveComics(response)
-        }
+        comicsUseCase.execute(with: .init(offset: offset))
+            .subscribeOnMainDisposed(by: disposeBag) { [weak self] result in
+                self?.handleRetrieveComics(result)
+            }
     }
     
     // MARK: - HANDLERS
     
-    private func handleRetrieveComics(_ response: ComicsResponse) {
+    private func handleRetrieveComics(_ response: Result<[Comic]?, Error>) {
         switch response {
-        case .success(let response):
-            handleSuccess(response.data?.results)
+        case .success(let comics):
+            handleSuccess(comics)
         case .failure(let error):
             handleError(error)
         }

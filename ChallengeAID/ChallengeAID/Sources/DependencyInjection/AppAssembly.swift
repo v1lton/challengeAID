@@ -26,6 +26,19 @@ class AppAssembly: Assembly {
                                   factory: factory)
         }
         
+        // MARK: - Networking
+        
+        container.register(NetworkingOperationProtocol.self) { _ in
+            return NetworkingOperation()
+        }
+        
+        // MARK: - Use Cases
+        
+        container.register(ComicsUseCaseType.self) { resolver in
+            let networking = resolver.resolveUnwrapping(NetworkingOperationProtocol.self)
+            return ComicsUseCase(networking: networking)
+        }
+        
         // MARK: Entity Managers
         
         container.register(ComicManagerProtocol.self) { _ in
@@ -36,7 +49,8 @@ class AppAssembly: Assembly {
         
         container.register(ComicsViewModelProtocol.self) { resolver in
             let comicManager = resolver.resolveUnwrapping(ComicManagerProtocol.self)
-            return ComicsViewModel(comicManager: comicManager)
+            let useCase = resolver.resolveUnwrapping(ComicsUseCaseType.self)
+            return ComicsViewModel(comicManager: comicManager, comicsUseCase: useCase)
         }
         
         container.register(ComicsViewController.self) { resolver in

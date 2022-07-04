@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ComicRequest: Codable {
+struct ComicsRequestModel: Codable {
     
     let title: String?
     let offset: Int?

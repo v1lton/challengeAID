@@ -1,0 +1,72 @@
+//
+//  ComicsUseCase.swift
+//  ChallengeAID
+//
+//  Created by Wilton Ramos da Silva on 04/07/22.
+//
+
+import RxSwift
+
+protocol ComicsUseCaseType {
+    func execute(with requestModel: ComicsRequestModel) -> Observable<Result<[Comic]?, Error>>
+}
+
+class ComicsUseCase: ComicsUseCaseType {
+    
+    // MARK: - ALIASES
+    
+    typealias UseCaseEventType = Result<[Comic]?, Error>
+    typealias ServiceReturningType = Result<ComicsResponse, Error>
+    
+    // MARK: - PRIVATE PROPERTIES
+    
+    private let networking: NetworkingOperationProtocol
+    
+    // MARK: - INITIALIZERS
+    
+    init(networking: NetworkingOperationProtocol) {
+        self.networking = networking
+    }
+    
+    // MARK: - PUBLIC FUNCTIONS
+    
+    func execute(with requestModel: ComicsRequestModel) -> Observable<UseCaseEventType> {
+        return createObservable(with: requestModel)
+    }
+    
+    // MARK: - PRIVATE FUNCTIONS
+    
+    private func createObservable(with requestModel: ComicsRequestModel) -> Observable<UseCaseEventType> {
+        return .create { [weak self] observer in
+            guard let self = self else { return Disposables.create() }
+            self.makeRequest(with: requestModel, observer)
+            return Disposables.create()
+        }
+    }
+    
+    private func makeRequest(with requestModel: ComicsRequestModel, _ observer: AnyObserver<UseCaseEventType>) {
+        let request = MarvelRequest(cases: .comics(model: requestModel))
+        networking.request(request: request) { [weak self] (result: ServiceReturningType) in
+            guard let self = self else { return }
+            observer.onNext(self.handleResult(result))
+        }
+    }
+    
+    private func handleResult(_ result: ServiceReturningType) -> UseCaseEventType {
+        switch result {
+        case .success(let data):
+            return handleSuccess(data)
+        case .failure(let error):
+            return handleError(error)
+        }
+    }
+    
+    private func handleSuccess(_ data: ComicsResponse) -> UseCaseEventType {
+        let comics = data.data?.results
+        return .success(comics)
+    }
+    
+    private func handleError(_ error: Error) -> UseCaseEventType {
+        return .failure(error)
+    }
+}
