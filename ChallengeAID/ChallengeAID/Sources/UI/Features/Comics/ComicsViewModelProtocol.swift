@@ -11,11 +11,12 @@ protocol ComicsViewModelProtocol {
     
     // MARK: - PROPERTIES
     
+    var isPaginating: Bool { get set }
     var viewState: BehaviorSubject<ComicsViewState> { get }
     
     // MARK: - FUNCTIONS
     
-    func retrieveComics()
+    func retrieveComics(pagination: Bool)
     func getComics() -> [Comic]?
     func saveUserComic(from index: Int)
 }

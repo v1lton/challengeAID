@@ -15,14 +15,19 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     private let viewModel: ComicsViewModelProtocol
     private let disposeBag = DisposeBag()
-    private let reuseIdentifier = "ComicsCell"
+    private let reuseIdentifier = "EntityTableViewCell"
+    
+    // MARK: - PUBLIC PROPERTIES
+    
+    weak var delegate: ComicsViewControllerDelegate?
     
     // MARK: - UI
     
     private lazy var comicsTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(EntityTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 182
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -48,7 +53,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.retrieveComics()
+        viewModel.retrieveComics(pagination: false)
         setupView()
         buildViewHierarchy()
         constraintUI()
@@ -58,7 +63,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     // MARK: - SETUP
     
     private func setupView() {
-        view.backgroundColor = .white
+        title = "MARVEL"
     }
     
     private func buildViewHierarchy() {
@@ -99,29 +104,56 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     private func handleLoading() { }
     
     private func handleContent(_ content: [Comic]) {
-        comicsTableView.reloadData()    }
+        comicsTableView.tableFooterView = nil
+        comicsTableView.reloadData()
+    }
     
     private func handleError(_ error: Error) {
         print(error.localizedDescription)
     }
+    
+    // MARK: - PRIVATE FUNCTIONS
+    
+    private func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        return footerView
+    }
 }
 
 extension ComicsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.saveUserComic(from: indexPath.row)
+        guard let comic = viewModel.getComics()?[indexPath.row] else { return }
+        delegate?.comicsViewController(didTapComic: comic)
     }
 }
 
 extension ComicsViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.getComics()?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EntityTableViewCell //TODO: fix force cast
         let comics = viewModel.getComics()
-        cell.textLabel?.text = comics?[indexPath.row].title
+        guard let comic = comics?[indexPath.row] else { return cell }
+        cell.setupCell(with: .init(title: comic.title,
+                             description: comic.description,
+                             imagePath: comic.images?.first?.path,
+                             imageExtension: comic.images?.first?.imageExtension))
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let comicsCount = viewModel.getComics()?.count else { return }
+        if indexPath.row == comicsCount - 3 {
+            guard !viewModel.isPaginating else { return }
+            viewModel.retrieveComics(pagination: true)
+            self.comicsTableView.tableFooterView = createSpinnerFooter()
+        }
+    }
 }
-

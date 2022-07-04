@@ -12,7 +12,7 @@ struct MarvelRequest: Request {
     // MARK: - CASES
     
     enum Req {
-        case comics
+        case comics(model: ComicRequest)
         case characters
     }
     
@@ -56,17 +56,16 @@ struct MarvelRequest: Request {
         let privateKey = "aaf4426bbc98f90b7b2b774b4ddbae7a8df819a8"
         let apiKey = "7a7ed695471a3977d4f5baa70de8a112"
         let hash = "\(timestamp)\(privateKey)\(apiKey)".md5
+        var queryItems = [URLQueryItem(name: "ts", value: timestamp),
+                         URLQueryItem(name: "hash", value: hash),
+                         URLQueryItem(name: "apikey", value: apiKey)]
         
         switch cases {
-        case .comics:
-            return [URLQueryItem(name: "ts", value: timestamp),
-                    URLQueryItem(name: "hash", value: hash),
-                    URLQueryItem(name: "apikey", value: apiKey),
-                    URLQueryItem(name: "limit", value: "20")]
+        case .comics(let request):
+            queryItems.append(contentsOf: request.asQueryItens())
+            return queryItems
         case .characters:
-            return [URLQueryItem(name: "ts", value: timestamp),
-                    URLQueryItem(name: "hash", value: hash),
-                    URLQueryItem(name: "apikey", value: apiKey)]
+            return queryItems
         }
     }
 }

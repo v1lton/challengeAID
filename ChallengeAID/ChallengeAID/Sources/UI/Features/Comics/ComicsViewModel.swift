@@ -23,6 +23,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     // MARK: - PUBLIC PROPERTIES
     
     var viewState: BehaviorSubject<ComicsViewState> = .init(value: .loading)
+    var isPaginating: Bool = false
     
     // MARK: - INITIALIZERS
     
@@ -42,12 +43,17 @@ class ComicsViewModel: ComicsViewModelProtocol {
     }
     
     // MARK: - PRIVATE METHODS
-    
-    func retrieveComics() {
+    //TODO: fix marks
+    func retrieveComics(pagination: Bool) {
+        if pagination {
+            isPaginating = true
+        }
         let networking = NetworkingOperation()
-        let request = MarvelRequest(cases: .comics)
+        let offset = !pagination ? 0 : (model?.count ?? 0 + 1)
+        let request = MarvelRequest(cases: .comics(model: .init(offset: offset)))
         
         networking.request(request: request) { [weak self] (response: ComicsResponse) in
+            self?.isPaginating = false
             self?.handleRetrieveComics(response)
         }
     }
@@ -65,7 +71,11 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     private func handleSuccess(_ comics: [Comic]?) {
         guard let comics =  comics else { return handleEmptyComics() }
-        model = comics
+        if model == nil {
+            model = comics
+        } else {
+            model?.append(contentsOf: comics)
+        }
         viewState.onNext(.content(comics))
     }
     
