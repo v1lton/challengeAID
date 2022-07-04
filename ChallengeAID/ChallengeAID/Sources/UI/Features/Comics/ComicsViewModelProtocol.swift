@@ -18,5 +18,6 @@ protocol ComicsViewModelProtocol {
     
     func retrieveComics(pagination: Bool)
     func getComics() -> [ComicModel]?
+    func getComic(at index: Int) -> ComicModel?
     func favoriteComic(from index: Int)
 }

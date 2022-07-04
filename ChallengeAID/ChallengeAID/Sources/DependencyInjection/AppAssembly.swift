@@ -61,8 +61,9 @@ class AppAssembly: Assembly {
         
         // MARK: - DetailsViewController
         
-        container.register(DetailsViewModelProtocol.self) { (_, model: DetailsModel) in
-            return DetailsViewModel(model: model)
+        container.register(DetailsViewModelProtocol.self) { (resolver, model: DetailsModel) in
+            let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
+            return DetailsViewModel(model: model, comicManager: comicManager)
         }
         
         container.register(DetailsViewController.self) { (resolver, model: DetailsModel) in

@@ -11,6 +11,7 @@ public protocol ComicObjectManagerType: EntityManagerProtocol {
     func create(_ comic: ComicModel?)
     func fetchAll() -> [ComicManagedObject]?
     func isComicFavorite(_ id: String?) -> Bool
+    func delete(_ id: String?)
 }
 
 final class ComicObjectManager: EntityManager, ComicObjectManagerType {
@@ -53,6 +54,25 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
             return true
         }
         return false
+    }
+    
+    public func delete(_ id: String?) {
+        guard let id = id else { return }
+        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: entityName)
+        fetchRequest.fetchLimit = 1
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let comic = try coreDataContext.fetch(fetchRequest).first
+            if let comic = comic {
+                coreDataContext.delete(comic)
+            } else {
+                print("Comic \(id) was not found")
+            }
+        }
+        catch {
+            print("Error deleting comic \(id)")
+        }
+        saveContext()
     }
     
     public func fetchAll() -> [ComicManagedObject]? {

@@ -25,6 +25,6 @@ public struct ComicModel {
         self.description = description
         self.imagePath = imagePath
         self.imageExtension = imageExtension
-        self.isFavorite = true
+        self.isFavorite = isFavorite
     }
 }

@@ -36,6 +36,12 @@ class ComicsViewModel: ComicsViewModelProtocol {
         return comics
     }
     
+    func getComic(at index: Int) -> ComicModel? {
+        guard var comic = comics?[index] else { return nil }
+        comic.isFavorite = comicManager.isComicFavorite(comic.id)
+        return comic
+    }
+    
     func favoriteComic(from index: Int) {
         guard let comicObject = comics?[index] else {return}
         comicManager.create(comicObject)

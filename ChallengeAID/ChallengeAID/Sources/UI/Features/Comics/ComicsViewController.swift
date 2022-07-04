@@ -126,7 +126,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
 extension ComicsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let comic = viewModel.getComics()?[indexPath.row] else { return }
+        guard let comic = viewModel.getComic(at: indexPath.row) else { return }
         delegate?.comicsViewController(didTapComic: comic)
     }
 }
