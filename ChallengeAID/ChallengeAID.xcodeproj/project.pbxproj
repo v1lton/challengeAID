@@ -38,6 +38,14 @@
 		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
 		49059C3F287213BC00E779AC /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C3E287213BC00E779AC /* EntityManager.swift */; };
 		49059C4128721C4E00E779AC /* ComicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicManager.swift */; };
+		49059C44287229A000E779AC /* ComicsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C43287229A000E779AC /* ComicsModel.swift */; };
+		49059C4828722FB400E779AC /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4728722FB400E779AC /* DetailsViewController.swift */; };
+		49059C4A28722FBC00E779AC /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4928722FBC00E779AC /* DetailsViewModel.swift */; };
+		49059C4C287230A400E779AC /* DetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4B287230A400E779AC /* DetailsModel.swift */; };
+		49059C4F287231B400E779AC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C4E287231B400E779AC /* SDWebImage */; };
+		49059C53287251C000E779AC /* EntityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C52287251C000E779AC /* EntityTableViewCell.swift */; };
+		49059C5528725BF500E779AC /* EntityCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C5428725BF500E779AC /* EntityCellModel.swift */; };
+		49059C57287264C400E779AC /* ComicRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C56287264C400E779AC /* ComicRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +99,13 @@
 		49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerProtocol.swift; sourceTree = "<group>"; };
 		49059C3E287213BC00E779AC /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		49059C4028721C4E00E779AC /* ComicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicManager.swift; sourceTree = "<group>"; };
+		49059C43287229A000E779AC /* ComicsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsModel.swift; sourceTree = "<group>"; };
+		49059C4728722FB400E779AC /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		49059C4928722FBC00E779AC /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		49059C4B287230A400E779AC /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
+		49059C52287251C000E779AC /* EntityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTableViewCell.swift; sourceTree = "<group>"; };
+		49059C5428725BF500E779AC /* EntityCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCellModel.swift; sourceTree = "<group>"; };
+		49059C56287264C400E779AC /* ComicRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49059C4F287231B400E779AC /* SDWebImage in Frameworks */,
 				49059C3B2871EB2500E779AC /* RxSwift in Frameworks */,
 				49059C092870B33400E779AC /* Swinject in Frameworks */,
 			);
@@ -194,6 +210,7 @@
 		49059BFC2870958C00E779AC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				49059C502872515F00E779AC /* Components */,
 				49059BD42870944700E779AC /* LaunchScreen.storyboard */,
 				49059C01287095BB00E779AC /* Navigation */,
 				49059C00287095B000E779AC /* Features */,
@@ -230,6 +247,8 @@
 		49059C00287095B000E779AC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				49059C4628722FA100E779AC /* Favorite */,
+				49059C4528722F7000E779AC /* Details */,
 				49059C2C287113A000E779AC /* Comics */,
 			);
 			path = Features;
@@ -285,6 +304,7 @@
 			children = (
 				49059C222870D67600E779AC /* Character.swift */,
 				49059C242870ECA400E779AC /* Comic.swift */,
+				49059C56287264C400E779AC /* ComicRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,6 +312,7 @@
 		49059C2C287113A000E779AC /* Comics */ = {
 			isa = PBXGroup;
 			children = (
+				49059C422872299000E779AC /* Models */,
 				49059C2D287113B200E779AC /* ComicsViewController.swift */,
 				49059C2F287113BD00E779AC /* ComicsViewModel.swift */,
 				49059C31287113D400E779AC /* ComicsViewControllerDelegate.swift */,
@@ -319,6 +340,48 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		49059C422872299000E779AC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				49059C43287229A000E779AC /* ComicsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		49059C4528722F7000E779AC /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				49059C4728722FB400E779AC /* DetailsViewController.swift */,
+				49059C4928722FBC00E779AC /* DetailsViewModel.swift */,
+				49059C4B287230A400E779AC /* DetailsModel.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		49059C4628722FA100E779AC /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		49059C502872515F00E779AC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				49059C512872516500E779AC /* Cells */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		49059C512872516500E779AC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				49059C52287251C000E779AC /* EntityTableViewCell.swift */,
+				49059C5428725BF500E779AC /* EntityCellModel.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,6 +401,7 @@
 			packageProductDependencies = (
 				49059C082870B33400E779AC /* Swinject */,
 				49059C3A2871EB2500E779AC /* RxSwift */,
+				49059C4E287231B400E779AC /* SDWebImage */,
 			);
 			productName = ChallengeAID;
 			productReference = 49059BC32870944600E779AC /* ChallengeAID.app */;
@@ -414,6 +478,7 @@
 			packageReferences = (
 				49059C072870B33400E779AC /* XCRemoteSwiftPackageReference "Swinject" */,
 				49059C392871EB2500E779AC /* XCRemoteSwiftPackageReference "RxSwift" */,
+				49059C4D287231B400E779AC /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 49059BC42870944600E779AC /* Products */;
 			projectDirPath = "";
@@ -461,6 +526,7 @@
 				49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */,
 				49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */,
 				49059C36287113F300E779AC /* ComicsViewState.swift in Sources */,
+				49059C4C287230A400E779AC /* DetailsModel.swift in Sources */,
 				49059C1E2870C58E00E779AC /* Request.swift in Sources */,
 				49059C142870B67C00E779AC /* Resolver+Extensions.swift in Sources */,
 				49059C162870B6EE00E779AC /* ViewControllerFactoryProtocol.swift in Sources */,
@@ -468,19 +534,25 @@
 				49059C3F287213BC00E779AC /* EntityManager.swift in Sources */,
 				49059C0F2870B55700E779AC /* ViewControllerFactory.swift in Sources */,
 				49059C34287113E600E779AC /* ComicsViewModelProtocol.swift in Sources */,
+				49059C4828722FB400E779AC /* DetailsViewController.swift in Sources */,
 				49059C4128721C4E00E779AC /* ComicManager.swift in Sources */,
 				49059C252870ECA400E779AC /* Comic.swift in Sources */,
 				49059C32287113D400E779AC /* ComicsViewControllerDelegate.swift in Sources */,
+				49059C53287251C000E779AC /* EntityTableViewCell.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,
 				49059C042870A9FD00E779AC /* Coordinator.swift in Sources */,
 				49059C30287113BD00E779AC /* ComicsViewModel.swift in Sources */,
 				49059C272870F56E00E779AC /* NetworkingOperation.swift in Sources */,
 				49059C232870D67600E779AC /* Character.swift in Sources */,
+				49059C44287229A000E779AC /* ComicsModel.swift in Sources */,
 				49059C292870FE1600E779AC /* String+Extensions.swift in Sources */,
 				49059C0D2870B43900E779AC /* DependencyProvider.swift in Sources */,
 				49059C202870C67800E779AC /* MarvelRequest.swift in Sources */,
 				49059BD12870944600E779AC /* ChallengeAID.xcdatamodeld in Sources */,
 				49059BC92870944600E779AC /* SceneDelegate.swift in Sources */,
+				49059C57287264C400E779AC /* ComicRequest.swift in Sources */,
+				49059C5528725BF500E779AC /* EntityCellModel.swift in Sources */,
+				49059C4A28722FBC00E779AC /* DetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +924,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		49059C4D287231B400E779AC /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -864,6 +944,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49059C392871EB2500E779AC /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		49059C4E287231B400E779AC /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49059C4D287231B400E779AC /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 

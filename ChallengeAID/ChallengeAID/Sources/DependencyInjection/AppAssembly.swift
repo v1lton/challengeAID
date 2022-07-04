@@ -43,5 +43,16 @@ class AppAssembly: Assembly {
             let viewModel = resolver.resolveUnwrapping(ComicsViewModelProtocol.self)
             return ComicsViewController(viewModel: viewModel)
         }
+        
+        // MARK: - DetailsViewController
+        
+        container.register(DetailsViewModelProtocol.self) { (_, model: DetailsModel) in
+            return DetailsViewModel(model: model)
+        }
+        
+        container.register(DetailsViewController.self) { (resolver, model: DetailsModel) in
+            let viewModel = resolver.resolveUnwrapping(DetailsViewModelProtocol.self, argument: model)
+            return DetailsViewController(viewModel: viewModel)
+        }
     }
 }

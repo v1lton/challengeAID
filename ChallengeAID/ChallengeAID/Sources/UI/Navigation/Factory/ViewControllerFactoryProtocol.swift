@@ -9,4 +9,5 @@ import UIKit
 
 protocol ViewControllerFactoryProtocol {
     func makeComicsViewController() -> ComicsViewController
+    func makeDetailsViewController(_ model: DetailsModel) -> DetailsViewController
 }

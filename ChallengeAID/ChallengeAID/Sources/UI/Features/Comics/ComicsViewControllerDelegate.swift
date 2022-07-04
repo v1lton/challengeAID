@@ -5,4 +5,8 @@
 //  Created by Wilton Ramos da Silva on 02/07/22.
 //
 
-protocol ComicsViewControllerDelegate { }
+import UIKit
+
+protocol ComicsViewControllerDelegate: AnyObject {
+    func comicsViewController(didTapComic comic: Comic)
+}

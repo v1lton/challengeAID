@@ -28,6 +28,14 @@ class AppCoordinator: Coordinator {
     
     public func start() {
         let comicsViewController = factory.makeComicsViewController()
+        comicsViewController.delegate = self
         navigationController.pushViewController(comicsViewController, animated: false)
+    }
+}
+
+extension AppCoordinator: ComicsViewControllerDelegate {
+    func comicsViewController(didTapComic comic: Comic) {
+        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
+        navigationController.pushViewController(detailsViewController, animated: true)
     }
 }

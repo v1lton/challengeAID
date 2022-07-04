@@ -25,4 +25,8 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     public func makeComicsViewController() -> ComicsViewController {
         return resolver.resolveUnwrapping(ComicsViewController.self)
     }
+    
+    public func makeDetailsViewController(_ model: DetailsModel) -> DetailsViewController {
+        return resolver.resolveUnwrapping(DetailsViewController.self, argument: model)
+    }
 }
