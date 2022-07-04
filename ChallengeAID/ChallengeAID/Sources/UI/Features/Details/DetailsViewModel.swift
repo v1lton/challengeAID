@@ -14,6 +14,7 @@ protocol DetailsViewModelProtocol {
 class DetailsViewModel: DetailsViewModelProtocol {
     
     // MARK: - PRIVATE PROPERTIES
+    
     private let comicManager: ComicObjectManagerType
     private let model: DetailsModel
     

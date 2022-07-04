@@ -29,4 +29,8 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     public func makeDetailsViewController(_ model: DetailsModel) -> DetailsViewController {
         return resolver.resolveUnwrapping(DetailsViewController.self, argument: model)
     }
+    
+    public func makeFavoritesViewController() -> FavoritesViewController {
+        return resolver.resolveUnwrapping(FavoritesViewController.self)
+    }
 }

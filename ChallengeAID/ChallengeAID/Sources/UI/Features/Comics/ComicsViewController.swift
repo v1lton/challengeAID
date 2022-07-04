@@ -33,13 +33,6 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         return tableView
     }()
     
-    private let label: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Comics!"
-        return label
-    }()
-    
     // MARK: - LIFE CYCLE
     
     init(viewModel: ComicsViewModelProtocol) {

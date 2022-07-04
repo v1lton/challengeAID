@@ -70,5 +70,17 @@ class AppAssembly: Assembly {
             let viewModel = resolver.resolveUnwrapping(DetailsViewModelProtocol.self, argument: model)
             return DetailsViewController(viewModel: viewModel)
         }
+        
+        // MARK: - FavoritesViewController
+        
+        container.register(FavoritesViewModelType.self) { resolver in
+            let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
+            return FavoritesViewModel(comicManager: comicManager)
+        }
+        
+        container.register(FavoritesViewController.self) { resolver in
+            let viewModel = resolver.resolveUnwrapping(FavoritesViewModelType.self)
+            return FavoritesViewController(viewModel: viewModel)
+        }
     }
 }

@@ -45,7 +45,7 @@ class AppCoordinator: Coordinator {
     }
     
     private func makeFavoritesTabBarItem() -> UIViewController {
-        let favoritesViewController = factory.makeComicsViewController()
+        let favoritesViewController = factory.makeFavoritesViewController()
         favoritesViewController.delegate = self
         favoritesViewController.tabBarItem.title = "Favorites"
         favoritesViewController.tabBarItem.image = .init(systemName: "heart")
@@ -55,6 +55,13 @@ class AppCoordinator: Coordinator {
 
 extension AppCoordinator: ComicsViewControllerDelegate {
     func comicsViewController(didTapComic comic: ComicModel) {
+        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
+        navigationController.pushViewController(detailsViewController, animated: true)
+    }
+}
+
+extension AppCoordinator: FavoritesViewControllerDelegate {
+    func favoritesViewController(didTapComic comic: ComicModel) {
         let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
         navigationController.pushViewController(detailsViewController, animated: true)
     }
