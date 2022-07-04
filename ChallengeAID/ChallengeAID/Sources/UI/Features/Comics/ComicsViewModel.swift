@@ -15,7 +15,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     private let comicManager: ComicObjectManagerType
     private let comicsUseCase: ComicsUseCaseType
     
-    private var model: [ComicManagedObject]?
+    private var comics: [ComicModel]?
     private let disposeBag = DisposeBag()
     
     // MARK: - PUBLIC PROPERTIES
@@ -32,17 +32,20 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - PUBLIC METHODS
     
-    func getComics() -> [ComicManagedObject]? {
-        return model
+    func getComics() -> [ComicModel]? {
+        return comics
     }
     
-    func saveUserComic(from index: Int) { }
+    func favoriteComic(from index: Int) {
+        guard let comicObject = comics?[index] else {return}
+        comicManager.create(comicObject)
+    }
     
     func retrieveComics(pagination: Bool) {
         if pagination {
             isPaginating = true
         }
-        let offset = !pagination ? 0 : (model?.count ?? 0 + 1)
+        let offset = !pagination ? 0 : (comics?.count ?? 0 + 1)
         comicsUseCase.execute(with: .init(offset: offset))
             .subscribeOnMainDisposed(by: disposeBag) { [weak self] result in
                 self?.isPaginating = false
@@ -52,7 +55,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - HANDLERS
     
-    private func handleRetrieveComics(_ response: Result<[ComicManagedObject]?, Error>) {
+    private func handleRetrieveComics(_ response: Result<[ComicModel]?, Error>) {
         switch response {
         case .success(let comics):
             handleSuccess(comics)
@@ -61,12 +64,12 @@ class ComicsViewModel: ComicsViewModelProtocol {
         }
     }
     
-    private func handleSuccess(_ comics: [ComicManagedObject]?) {
-        guard let comics =  comics else { return handleEmptyComics() }
-        if model == nil {
-            model = comics
+    private func handleSuccess(_ comics: [ComicModel]?) {
+        guard let comics = comics else { return handleEmptyComics() }
+        if self.comics == nil {
+            self.comics = comics
         } else {
-            model?.append(contentsOf: comics)
+            self.comics?.append(contentsOf: comics)
         }
         viewState.onNext(.content(comics))
     }

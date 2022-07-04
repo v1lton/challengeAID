@@ -1,31 +1,30 @@
 //
-//  EntityCellModel.swift
+//  ComicModel.swift
 //  ChallengeAID
 //
-//  Created by Wilton Ramos da Silva on 03/07/22.
+//  Created by Wilton Ramos da Silva on 04/07/22.
 //
 
-struct EntityCellModel {
+public struct ComicModel {
     
-    // MARK: - PUBLIC PROPERTIES
-    
+    let id: String
     let title: String?
     let description: String?
     let imagePath: String?
     let imageExtension: String?
-    let isFavorite: Bool?
+    var isFavorite: Bool
     
-    // MARK: - INITIALIZER
-    
-    init(title: String?,
+    init(id: String,
+         title: String?,
          description: String?,
          imagePath: String?,
          imageExtension: String?,
-         isFavorite: Bool?) {
+         isFavorite: Bool) {
+        self.id = id
         self.title = title
         self.description = description
         self.imagePath = imagePath
         self.imageExtension = imageExtension
-        self.isFavorite = isFavorite
+        self.isFavorite = true
     }
 }

@@ -8,17 +8,18 @@
 import RxSwift
 
 protocol ComicsUseCaseType {
-    func execute(with requestModel: ComicsRequestModel) -> Observable<Result<[ComicManagedObject]?, Error>>
+    func execute(with requestModel: ComicsRequestModel) -> Observable<Result<[ComicModel]?, Error>>
 }
 
 class ComicsUseCase: ComicsUseCaseType {
     
     // MARK: - ALIASES
     
-    typealias UseCaseEventType = Result<[ComicManagedObject]?, Error>
+    typealias UseCaseEventType = Result<[ComicModel]?, Error>
     typealias ServiceReturningType = Result<ComicsResponse, Error>
     
     // MARK: - PRIVATE PROPERTIES
+    
     private let comicObjectManager: ComicObjectManagerType
     private let networking: NetworkingOperationProtocol
     
@@ -53,6 +54,18 @@ class ComicsUseCase: ComicsUseCaseType {
         }
     }
     
+    private func convertComicToModel(_ comic: Comic) -> ComicModel? {
+        guard let id = comic.id else { return nil }
+        return ComicModel(id: String(id),
+                          title: comic.title,
+                          description: comic.description,
+                          imagePath: comic.images?.first?.path,
+                          imageExtension: comic.images?.first?.imageExtension,
+                          isFavorite: comicObjectManager.isComicFavorite(String(id)))
+    }
+    
+    // MARK: - HANDLERS
+    
     private func handleResult(_ result: ServiceReturningType) -> UseCaseEventType {
         switch result {
         case .success(let data):
@@ -64,8 +77,8 @@ class ComicsUseCase: ComicsUseCaseType {
     
     private func handleSuccess(_ data: ComicsResponse) -> UseCaseEventType {
         let comics = data.data?.results
-        let comicObjects: [ComicManagedObject]? = comics?.compactMap({ comic in
-            return comicObjectManager.create(from: comic)
+        let comicObjects: [ComicModel]? = comics?.compactMap({ comic in
+            return convertComicToModel(comic)
         })
         return .success(comicObjects)
     }

@@ -103,7 +103,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     private func handleLoading() { }
     
-    private func handleContent(_ content: [ComicManagedObject]) {
+    private func handleContent(_ content: [ComicModel]) {
         comicsTableView.tableFooterView = nil
         comicsTableView.reloadData()
     }
@@ -142,9 +142,10 @@ extension ComicsViewController: UITableViewDataSource {
         let comics = viewModel.getComics()
         guard let comic = comics?[indexPath.row] else { return cell }
         cell.setupCell(with: .init(title: comic.title,
-                                   description: comic.comicDescription,
+                                   description: comic.description,
                                    imagePath: comic.imagePath,
-                                   imageExtension: comic.imageExtension))
+                                   imageExtension: comic.imageExtension,
+                                   isFavorite: comic.isFavorite))
         return cell
     }
     

@@ -38,7 +38,6 @@
 		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
 		49059C3F287213BC00E779AC /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C3E287213BC00E779AC /* EntityManager.swift */; };
 		49059C4128721C4E00E779AC /* ComicObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicObjectManager.swift */; };
-		49059C44287229A000E779AC /* ComicsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C43287229A000E779AC /* ComicsModel.swift */; };
 		49059C4828722FB400E779AC /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4728722FB400E779AC /* DetailsViewController.swift */; };
 		49059C4A28722FBC00E779AC /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4928722FBC00E779AC /* DetailsViewModel.swift */; };
 		49059C4C287230A400E779AC /* DetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4B287230A400E779AC /* DetailsModel.swift */; };
@@ -48,6 +47,7 @@
 		49059C57287264C400E779AC /* ComicsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C56287264C400E779AC /* ComicsRequestModel.swift */; };
 		498106B52873080F00E1751C /* ComicsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498106B42873080F00E1751C /* ComicsUseCase.swift */; };
 		498106B728730F2200E1751C /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498106B628730F2200E1751C /* Observable+Extensions.swift */; };
+		498106C128732D2600E1751C /* ComicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498106C028732D2600E1751C /* ComicModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,7 +101,6 @@
 		49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerProtocol.swift; sourceTree = "<group>"; };
 		49059C3E287213BC00E779AC /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		49059C4028721C4E00E779AC /* ComicObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicObjectManager.swift; sourceTree = "<group>"; };
-		49059C43287229A000E779AC /* ComicsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsModel.swift; sourceTree = "<group>"; };
 		49059C4728722FB400E779AC /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		49059C4928722FBC00E779AC /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		49059C4B287230A400E779AC /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 		49059C56287264C400E779AC /* ComicsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRequestModel.swift; sourceTree = "<group>"; };
 		498106B42873080F00E1751C /* ComicsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsUseCase.swift; sourceTree = "<group>"; };
 		498106B628730F2200E1751C /* Observable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
+		498106C028732D2600E1751C /* ComicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +214,7 @@
 		49059BFC2870958C00E779AC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				498106BF28732D0B00E1751C /* Models */,
 				49059C502872515F00E779AC /* Components */,
 				49059BD42870944700E779AC /* LaunchScreen.storyboard */,
 				49059C01287095BB00E779AC /* Navigation */,
@@ -318,7 +319,6 @@
 		49059C2C287113A000E779AC /* Comics */ = {
 			isa = PBXGroup;
 			children = (
-				49059C422872299000E779AC /* Models */,
 				49059C2D287113B200E779AC /* ComicsViewController.swift */,
 				49059C2F287113BD00E779AC /* ComicsViewModel.swift */,
 				49059C31287113D400E779AC /* ComicsViewControllerDelegate.swift */,
@@ -344,14 +344,6 @@
 				49059C4028721C4E00E779AC /* ComicObjectManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		49059C422872299000E779AC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				49059C43287229A000E779AC /* ComicsModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		49059C4528722F7000E779AC /* Details */ = {
@@ -394,6 +386,14 @@
 				498106B42873080F00E1751C /* ComicsUseCase.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		498106BF28732D0B00E1751C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				498106C028732D2600E1751C /* ComicModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,13 +554,13 @@
 				49059C32287113D400E779AC /* ComicsViewControllerDelegate.swift in Sources */,
 				498106B728730F2200E1751C /* Observable+Extensions.swift in Sources */,
 				49059C53287251C000E779AC /* EntityTableViewCell.swift in Sources */,
+				498106C128732D2600E1751C /* ComicModel.swift in Sources */,
 				49059BC72870944600E779AC /* AppDelegate.swift in Sources */,
 				49059C042870A9FD00E779AC /* Coordinator.swift in Sources */,
 				49059C30287113BD00E779AC /* ComicsViewModel.swift in Sources */,
 				49059C272870F56E00E779AC /* NetworkingOperation.swift in Sources */,
 				498106B52873080F00E1751C /* ComicsUseCase.swift in Sources */,
 				49059C232870D67600E779AC /* Character.swift in Sources */,
-				49059C44287229A000E779AC /* ComicsModel.swift in Sources */,
 				49059C292870FE1600E779AC /* String+Extensions.swift in Sources */,
 				49059C0D2870B43900E779AC /* DependencyProvider.swift in Sources */,
 				49059C202870C67800E779AC /* MarvelRequest.swift in Sources */,

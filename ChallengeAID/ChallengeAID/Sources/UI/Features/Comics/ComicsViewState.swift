@@ -7,6 +7,6 @@
 
 enum ComicsViewState {
     case loading
-    case content(_ content: [ComicManagedObject])
+    case content(_ content: [ComicModel])
     case error(_ error: Error)
 }

@@ -17,6 +17,6 @@ protocol ComicsViewModelProtocol {
     // MARK: - FUNCTIONS
     
     func retrieveComics(pagination: Bool)
-    func getComics() -> [ComicManagedObject]?
-    func saveUserComic(from index: Int)
+    func getComics() -> [ComicModel]?
+    func favoriteComic(from index: Int)
 }

@@ -6,14 +6,14 @@
 //
 
 import CoreData
-import UIKit
 
 public protocol ComicObjectManagerType: EntityManagerProtocol {
-    func create(from comic: Comic) -> ComicManagedObject?
-    func fetchAll() -> [UserComic]?
+    func create(_ comic: ComicModel?)
+    func fetchAll() -> [ComicManagedObject]?
+    func isComicFavorite(_ id: String?) -> Bool
 }
 
-final class ComicObjectManager: EntityManager {
+final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     
     // MARK: - PRIVATE PROPERTIES
     
@@ -28,35 +28,41 @@ final class ComicObjectManager: EntityManager {
             print("Sorry, we can't save the comic. Try again later. \n \(error)")
         }
     }
-}
-
-extension ComicObjectManager: ComicObjectManagerType {
     
     // MARK: - PUBLIC FUNCTIONS
     
-    public func create(from comic: Comic) -> ComicManagedObject? {
+    public func create(_ comic: ComicModel?) {
         let comicObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: coreDataContext)
-        guard let object = comicObject as? ComicManagedObject,
-              let comicId = comic.id else {
+        guard let object = comicObject as? ComicManagedObject else {
             print("Could not create entity \(entityName)")
-            return nil
+            return
         }
-        object.id = String(comicId)
-        object.title = comic.title
-        object.comicDescription = comic.description
-        object.imagePath = comic.images?.first?.path
-        object.imageExtension = comic.images?.first?.imageExtension
-        return object
+        object.id = comic?.id
+        object.title = comic?.title
+        object.comicDescription = comic?.description
+        object.imagePath = comic?.imagePath
+        object.imageExtension = comic?.imageExtension
+        saveContext()
     }
     
-    public func fetchAll() -> [UserComic]? {
-        let fetchRequest = NSFetchRequest<UserComic>(entityName: entityName)
+    public func isComicFavorite(_ id: String?) -> Bool {
+        guard let comicsSaved = fetchAll() else {
+            return false
+        }
+        for comic in comicsSaved where comic.id == id {
+            return true
+        }
+        return false
+    }
+    
+    public func fetchAll() -> [ComicManagedObject]? {
+        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: entityName)
         do {
             let comics = try coreDataContext.fetch(fetchRequest)
             return comics
         } catch {
-            print("DEU RUIM")
             return nil
         }
     }
 }
+

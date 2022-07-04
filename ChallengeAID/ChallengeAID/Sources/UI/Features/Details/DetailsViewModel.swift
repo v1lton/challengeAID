@@ -6,7 +6,7 @@
 //
 
 protocol DetailsViewModelProtocol {
-    func getComic() -> ComicManagedObject
+    func getComic() -> ComicModel
 }
 
 class DetailsViewModel: DetailsViewModelProtocol {
@@ -23,7 +23,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     
     // MARK: - PUBLIC METHODS
     
-    func getComic() -> ComicManagedObject {
+    func getComic() -> ComicModel {
         return model.comic
     }
 }

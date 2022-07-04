@@ -8,5 +8,5 @@
 import UIKit
 
 protocol ComicsViewControllerDelegate: AnyObject {
-    func comicsViewController(didTapComic comic: ComicManagedObject)
+    func comicsViewController(didTapComic comic: ComicModel)
 }
