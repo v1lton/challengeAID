@@ -63,7 +63,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     // MARK: - SETUP
     
     private func setupView() {
-        title = "MARVEL"
+        title = "Comics"
     }
     
     private func buildViewHierarchy() {

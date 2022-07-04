@@ -27,9 +27,29 @@ class AppCoordinator: Coordinator {
     // MARK: - PUBLIC FUNCTIONS
     
     public func start() {
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [makeComicsTabBarItem(),
+                                            makeFavoritesTabBarItem()]
+        navigationController.pushViewController(tabBarController, animated: false)
+    }
+    
+    
+    // MARK: - PRIVATE FUNCTIONS
+    
+    private func makeComicsTabBarItem() -> UIViewController {
         let comicsViewController = factory.makeComicsViewController()
         comicsViewController.delegate = self
-        navigationController.pushViewController(comicsViewController, animated: false)
+        comicsViewController.tabBarItem.title = "Comics"
+        comicsViewController.tabBarItem.image = .init(systemName: "book")
+        return comicsViewController
+    }
+    
+    private func makeFavoritesTabBarItem() -> UIViewController {
+        let favoritesViewController = factory.makeComicsViewController()
+        favoritesViewController.delegate = self
+        favoritesViewController.tabBarItem.title = "Favorites"
+        favoritesViewController.tabBarItem.image = .init(systemName: "heart")
+        return favoritesViewController
     }
 }
 
