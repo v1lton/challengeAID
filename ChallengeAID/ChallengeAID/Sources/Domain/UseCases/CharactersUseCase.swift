@@ -7,11 +7,11 @@
 
 import RxSwift
 
-protocol DetailsUseCaseType {
+protocol CharactersUseCase {
     func execute(with ids: [String]) -> Observable<Result<[CharacterModel], Error>>
 }
 
-class DetailsUseCase: DetailsUseCaseType {
+class DetailsUseCase: CharactersUseCase {
     
     // MARK: - ALIASES
     

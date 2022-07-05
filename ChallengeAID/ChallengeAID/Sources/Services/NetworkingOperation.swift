@@ -32,21 +32,21 @@ public class NetworkingOperation: NetworkingOperationProtocol {
             let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 guard let data = data,
                       let responseObject = try? JSONDecoder().decode(ResponseType.self, from: data) else {
-                    requestQueue.async {
-                        requestGroup.leave()
-                    }
+                          requestQueue.async {
+                              requestGroup.leave()
+                          }
                           return
-                }
+                      }
                 
                 requestQueue.async {
                     responseList.append(responseObject)
                     requestGroup.leave()
                 }
             }
-            requestGroup.notify(queue: DispatchQueue.global()) {
-                completion(.success(responseList))
-            }
             dataTask.resume()
+        }
+        requestGroup.notify(queue: DispatchQueue.global()) {
+            completion(.success(responseList))
         }
     }
     
