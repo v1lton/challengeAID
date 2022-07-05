@@ -13,7 +13,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let viewModel: ComicsViewModelProtocol
+    private var viewModel: ComicsViewModelProtocol
     private let disposeBag = DisposeBag()
     private let reuseIdentifier = "EntityTableViewCell"
     
@@ -33,6 +33,15 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         return tableView
     }()
     
+    private lazy var searchBar: UISearchController = {
+        let searchController = UISearchController()
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for comic title"
+        return searchController
+    }()
+    
     // MARK: - LIFE CYCLE
     
     init(viewModel: ComicsViewModelProtocol) {
@@ -48,6 +57,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         super.viewDidLoad()
         viewModel.retrieveComics(pagination: false)
         setupView()
+        setupNavigationBar()
         buildViewHierarchy()
         constraintUI()
         bindObservables()
@@ -79,6 +89,15 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
                 self?.handleViewState(state)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.searchController = searchBar
+        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.title = title
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        definesPresentationContext = true
     }
     
     // MARK: - HANDLERS
@@ -152,3 +171,19 @@ extension ComicsViewController: UITableViewDataSource {
         }
     }
 }
+
+extension ComicsViewController: UISearchControllerDelegate { }
+
+extension ComicsViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text,
+           !text.isEmpty {
+            viewModel.filterModel = FilterSearchModel(text: text)
+        } else {
+            viewModel.filterModel = nil
+        }
+        comicsTableView.reloadData()
+    }
+}
+
+extension ComicsViewController: UISearchBarDelegate { }

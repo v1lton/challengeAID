@@ -9,6 +9,7 @@
 protocol FavoritesViewModelType {
     func getComics() -> [ComicModel]?
     func getComic(at index: Int) -> ComicModel?
+    var filterModel: FilterSearchModel? { get set }
 }
 
 class FavoritesViewModel: FavoritesViewModelType {
@@ -16,6 +17,10 @@ class FavoritesViewModel: FavoritesViewModelType {
     // MARK: - PRIVATE PROPERTIES
     
     private let comicManager: ComicObjectManagerType
+    
+    // MARK: - PUBLIC PROPERTIES
+    
+    var filterModel: FilterSearchModel?
     
     // MARK: - INITIALIZER
     
@@ -27,9 +32,13 @@ class FavoritesViewModel: FavoritesViewModelType {
     
     func getComics() -> [ComicModel]? {
         let comicObjects = comicManager.fetchAll()
-        return comicObjects?.compactMap({ object in
+        let comics = comicObjects?.compactMap({ object in
             makeComicModel(from: object)
         })
+        if let filterModel = filterModel {
+            return getFilteredComics(comics, by: filterModel)
+        }
+        return comics
     }
     
     func getComic(at index: Int) -> ComicModel? {
@@ -70,5 +79,15 @@ class FavoritesViewModel: FavoritesViewModelType {
         return creators.compactMap { object in
             return .init(from: object)
         }
+    }
+    
+    private func getFilteredComics(_ comics: [ComicModel]?, by filterModel: FilterSearchModel) -> [ComicModel]? {
+        return comics?.filter({ comic in
+            if let comicTitle = comic.title?.lowercased(),
+               comicTitle.contains(filterModel.text.lowercased()) {
+                return true
+            }
+            return false
+        })
     }
 }

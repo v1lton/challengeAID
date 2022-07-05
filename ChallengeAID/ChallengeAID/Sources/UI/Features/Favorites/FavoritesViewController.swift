@@ -15,7 +15,7 @@ class FavoritesViewController: UIViewController {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let viewModel: FavoritesViewModelType
+    private var viewModel: FavoritesViewModelType
     private let reuseIdentifier = "EntityTableViewCell"
     
     // MARK: - PUBLIC PROPERTIES
@@ -34,6 +34,15 @@ class FavoritesViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var searchBar: UISearchController = {
+        let searchController = UISearchController()
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for favorite title"
+        return searchController
+    }()
+    
     // MARK: - LIFE CYCLE
     
     init(viewModel: FavoritesViewModelType) {
@@ -47,12 +56,14 @@ class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupView()
         buildViewHierarchy()
         constraintUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         comicsTableView.reloadData()
     }
     
@@ -73,6 +84,15 @@ class FavoritesViewController: UIViewController {
             comicsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             comicsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.searchController = searchBar
+        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.title = title
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        definesPresentationContext = true
     }
 }
 
@@ -96,9 +116,25 @@ extension FavoritesViewController: UITableViewDataSource {
 }
 
 extension FavoritesViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let comic = viewModel.getComic(at: indexPath.row) else { return }
         delegate?.favoritesViewController(didTapComic: comic)
     }
 }
+
+extension FavoritesViewController: UISearchControllerDelegate { }
+
+extension FavoritesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text,
+           !text.isEmpty {
+            viewModel.filterModel = FilterSearchModel(text: text)
+        } else {
+            viewModel.filterModel = nil
+        }
+        comicsTableView.reloadData()
+    }
+}
+
+extension FavoritesViewController: UISearchBarDelegate { }

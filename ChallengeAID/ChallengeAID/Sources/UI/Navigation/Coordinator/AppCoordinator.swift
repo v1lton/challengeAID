@@ -43,7 +43,7 @@ class AppCoordinator: Coordinator {
         let favoritesNavigationController = makeFavoritesNavigationController()
         setupFavoritesCoordinator(with: favoritesNavigationController)
         
-        tabBarController.viewControllers = [favoritesNavigationController, comicsNavigationController]
+        tabBarController.viewControllers = [comicsNavigationController, favoritesNavigationController]
         navigationController.pushViewController(tabBarController, animated: true)
     }
     

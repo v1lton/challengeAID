@@ -13,6 +13,7 @@ protocol ComicsViewModelProtocol {
     
     var isPaginating: Bool { get set }
     var viewState: BehaviorSubject<ComicsViewState> { get }
+    var filterModel: FilterSearchModel? { get set }
     
     // MARK: - FUNCTIONS
     

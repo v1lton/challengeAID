@@ -14,7 +14,6 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     private let comicManager: ComicObjectManagerType
     private let comicsUseCase: ComicsUseCaseType
-    
     private var comics: [ComicModel]?
     private let disposeBag = DisposeBag()
     
@@ -22,6 +21,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     var viewState: BehaviorSubject<ComicsViewState> = .init(value: .loading)
     var isPaginating: Bool = false
+    var filterModel: FilterSearchModel?
     
     // MARK: - INITIALIZERS
     
@@ -33,6 +33,9 @@ class ComicsViewModel: ComicsViewModelProtocol {
     // MARK: - PUBLIC METHODS
     
     func getComics() -> [ComicModel]? {
+        if let filterModel = filterModel {
+            return getFilteredComics(filterModel)
+        }
         return comics
     }
     
@@ -84,5 +87,17 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     private func handleError(_ error: Error) {
         print(error)
+    }
+    
+    // MARK: - PRIVATE FUNCTIONS
+    
+    private func getFilteredComics(_ filterModel: FilterSearchModel) -> [ComicModel]? {
+        return comics?.filter({ comic in
+            if let comicTitle = comic.title?.lowercased(),
+               comicTitle.contains(filterModel.text.lowercased()) {
+                return true
+            }
+            return false
+        })
     }
 }
