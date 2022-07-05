@@ -66,13 +66,13 @@ class ComicsUseCase: ComicsUseCaseType {
                           isFavorite: comicObjectManager.isComicFavorite(String(id)))
     }
     
-    private func convertCharaterListToModel(_ characterList: CharacterList?) -> [ComicModel.CharacterModel]? {
+    private func convertCharaterListToModel(_ characterList: CharacterList?) -> [ComicModel.Character]? {
         return characterList?.items?.compactMap({ list in
             return .init(from: list)
         })
     }
     
-    private func convertCreatorListToModel(_ creatorList: CreatorList?) -> [ComicModel.CharacterModel]? {
+    private func convertCreatorListToModel(_ creatorList: CreatorList?) -> [ComicModel.Character]? {
         return creatorList?.items?.compactMap({ list in
             return .init(from: list)
         })

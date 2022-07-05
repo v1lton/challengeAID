@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CharacterManagedObject" representedClassName="CharacterManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="resourceURI" optional="YES" attributeType="String"/>
+        <attribute name="role" optional="YES" attributeType="String"/>
+        <relationship name="comic" maxCount="1" deletionRule="Nullify" destinationEntity="ComicManagedObject" inverseName="characters" inverseEntity="ComicManagedObject"/>
+    </entity>
     <entity name="ComicManagedObject" representedClassName="ComicManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="comicDescription" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="imageExtension" optional="YES" attributeType="String"/>
         <attribute name="imagePath" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CharacterManagedObject" inverseName="comic" inverseEntity="CharacterManagedObject"/>
+        <relationship name="creators" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CreatorManagedObject" inverseName="comic" inverseEntity="CreatorManagedObject"/>
+    </entity>
+    <entity name="CreatorManagedObject" representedClassName="CreatorManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="resourceURI" optional="YES" attributeType="String"/>
+        <attribute name="role" optional="YES" attributeType="String"/>
+        <relationship name="comic" maxCount="1" deletionRule="Nullify" destinationEntity="ComicManagedObject" inverseName="creators" inverseEntity="ComicManagedObject"/>
     </entity>
     <elements>
-        <element name="ComicManagedObject" positionX="-54" positionY="54" width="128" height="104"/>
+        <element name="ComicManagedObject" positionX="-54" positionY="54" width="128" height="134"/>
+        <element name="CreatorManagedObject" positionX="-18" positionY="135" width="128" height="89"/>
+        <element name="CharacterManagedObject" positionX="0" positionY="144" width="128" height="89"/>
     </elements>
 </model>

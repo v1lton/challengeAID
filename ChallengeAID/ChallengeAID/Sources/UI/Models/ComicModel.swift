@@ -13,8 +13,8 @@ public struct ComicModel {
     let description: String?
     let imagePath: String?
     let imageExtension: String?
-    let characters: [CharacterModel]?
-    let creators: [CharacterModel]?
+    let characters: [Character]?
+    let creators: [Character]?
     var isFavorite: Bool
     
     init(id: String,
@@ -22,8 +22,8 @@ public struct ComicModel {
          description: String?,
          imagePath: String?,
          imageExtension: String?,
-         characters: [CharacterModel]?,
-         creators: [CharacterModel]?,
+         characters: [Character]?,
+         creators: [Character]?,
          isFavorite: Bool) {
         self.id = id
         self.title = title
@@ -37,7 +37,7 @@ public struct ComicModel {
 }
 
 extension ComicModel {
-    public struct CharacterModel {
+    public struct Character {
         let resourceURI: String?
         let name: String?
         let role: String?
@@ -46,6 +46,18 @@ extension ComicModel {
             self.resourceURI = summary.resourceURI
             self.name = summary.name
             self.role = summary.role
+        }
+        
+        public init(from characterObject: CharacterManagedObject) {
+            self.resourceURI = characterObject.resourceURI
+            self.name = characterObject.name
+            self.role = characterObject.role
+        }
+        
+        public init(from creatorObject: CreatorManagedObject) {
+            self.resourceURI = creatorObject.resourceURI
+            self.name = creatorObject.name
+            self.role = creatorObject.role
         }
     }
 }

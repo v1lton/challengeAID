@@ -9,8 +9,8 @@ protocol DetailsViewModelProtocol {
     func getComic() -> ComicModel
     func favoriteComic()
     func unfavoriteComic()
-    func getCharacters() -> [ComicModel.CharacterModel]?
-    func getCreators() -> [ComicModel.CharacterModel]?
+    func getCharacters() -> [ComicModel.Character]?
+    func getCreators() -> [ComicModel.Character]?
     func getTableViewCount() -> Int
 }
 
@@ -34,11 +34,11 @@ class DetailsViewModel: DetailsViewModelProtocol {
         return model.comic
     }
     
-    func getCharacters() -> [ComicModel.CharacterModel]? {
+    func getCharacters() -> [ComicModel.Character]? {
         return model.comic.characters
     }
     
-    func getCreators() -> [ComicModel.CharacterModel]? {
+    func getCreators() -> [ComicModel.Character]? {
         return model.comic.creators
     }
     

@@ -30,6 +30,36 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
         }
     }
     
+    private func makeCharactersSet(from characters: [ComicModel.Character]?, for comic: ComicManagedObject) {
+        guard let characters = characters else { return }
+        for character in characters {
+            let characterObject = NSEntityDescription.insertNewObject(forEntityName: "CharacterManagedObject", into: coreDataContext)
+            if let object = characterObject as? CharacterManagedObject {
+                object.comic = comic
+                object.resourceURI = character.resourceURI
+                object.name = character.name
+                object.role = character.role
+            } else {
+                print("Could not create entity CharacterManagedObject")
+            }
+        }
+    }
+    
+    private func makeCreatorsSet(from creators: [ComicModel.Character]?, for comic: ComicManagedObject) {
+        guard let creators = creators else { return }
+        for creator in creators {
+            let creatorObject = NSEntityDescription.insertNewObject(forEntityName: "CreatorManagedObject", into: coreDataContext)
+            if let object = creatorObject as? CreatorManagedObject {
+                object.comic = comic
+                object.resourceURI = creator.resourceURI
+                object.name = creator.name
+                object.role = creator.role
+            } else {
+                print("Could not create entity CreatorManagedObject")
+            }
+        }
+    }
+    
     // MARK: - PUBLIC FUNCTIONS
     
     public func create(_ comic: ComicModel?) {
@@ -43,6 +73,8 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
         object.comicDescription = comic?.description
         object.imagePath = comic?.imagePath
         object.imageExtension = comic?.imageExtension
+        makeCharactersSet(from: comic?.characters, for: object)
+        makeCreatorsSet(from: comic?.creators, for: object)
         saveContext()
     }
     
