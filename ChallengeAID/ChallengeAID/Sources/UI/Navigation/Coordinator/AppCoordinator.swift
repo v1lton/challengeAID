@@ -77,11 +77,4 @@ class AppCoordinator: Coordinator {
         children.append(favoritesCoordinator)
         favoritesCoordinator.start()
     }
-    
-    
-//    private func makeComicsTabBarItem() -> UIViewController {
-//    }
-//
-//    private func makeFavoritesTabBarItem() -> UIViewController {
-//    }
 }
