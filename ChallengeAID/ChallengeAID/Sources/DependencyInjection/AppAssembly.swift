@@ -14,16 +14,28 @@ class AppAssembly: Assembly {
         
         // MARK: - Factory
         
-        container.register(ViewControllerFactoryProtocol.self) { resolver in
-            return ViewControllerFactory(resolver: resolver)
+        container.register(AppFactoryType.self) { resolver in
+            return AppFactory(resolver: resolver)
         }
         
-        // MARK: - Coordinator
+        // MARK: - Coordinators
         
         container.register(Coordinator.self) { (resolver, navigationController: UINavigationController) in
-            let factory = resolver.resolveUnwrapping(ViewControllerFactoryProtocol.self)
+            let factory = resolver.resolveUnwrapping(AppFactoryType.self)
             return AppCoordinator(navigationController: navigationController,
                                   factory: factory)
+        }
+        
+        container.register(ComicsCoordinatorType.self) { (resolver, navigationController: UINavigationController) in
+            let factory = resolver.resolveUnwrapping(AppFactoryType.self)
+            return ComicsCoordinator(navigationController: navigationController,
+                                     factory: factory)
+        }
+        
+        container.register(FavoritesCoordinatorType.self) { (resolver, navigationController: UINavigationController) in
+            let factory = resolver.resolveUnwrapping(AppFactoryType.self)
+            return FavoritesCoordinator(navigationController: navigationController,
+                                     factory: factory)
         }
         
         // MARK: - Networking

@@ -9,9 +9,14 @@ import UIKit
 
 class AppCoordinator: Coordinator {
     
+    // MARK: - PUBLIC PROPERTIES
+    
+    var parentCoordinator: Coordinator?
+    var children: [Coordinator] = []
+    
     // MARK: - PRIVATE PROPERTIES
     
-    private var factory: ViewControllerFactoryProtocol
+    private var factory: AppFactoryType
     
     // MARK: - PUBLIC PROPERTIES
     
@@ -19,50 +24,64 @@ class AppCoordinator: Coordinator {
     
     // MARK: LIFE CYCLE
     
-    init(navigationController: UINavigationController, factory: ViewControllerFactoryProtocol) {
+    init(navigationController: UINavigationController, factory: AppFactoryType) {
         self.navigationController = navigationController
+        self.navigationController.isNavigationBarHidden = true
         self.factory = factory
     }
     
     // MARK: - PUBLIC FUNCTIONS
     
+    
+    
     public func start() {
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [makeComicsTabBarItem(),
-                                            makeFavoritesTabBarItem()]
-        navigationController.pushViewController(tabBarController, animated: false)
+        
+        let comicsNavigationController = makeComicsNavigationController()
+        setupComicsCoordinator(with: comicsNavigationController)
+        
+        let favoritesNavigationController = makeFavoritesNavigationController()
+        setupFavoritesCoordinator(with: favoritesNavigationController)
+        
+        tabBarController.viewControllers = [favoritesNavigationController, comicsNavigationController]
+        navigationController.pushViewController(tabBarController, animated: true)
     }
     
     
     // MARK: - PRIVATE FUNCTIONS
     
-    private func makeComicsTabBarItem() -> UIViewController {
-        let comicsViewController = factory.makeComicsViewController()
-        comicsViewController.delegate = self
-        comicsViewController.tabBarItem.title = "Comics"
-        comicsViewController.tabBarItem.image = .init(systemName: "book")
-        return comicsViewController
+    private func makeComicsNavigationController() -> UINavigationController {
+        let comicsNavigationController = UINavigationController()
+        comicsNavigationController.tabBarItem.title = "Comics"
+        comicsNavigationController.tabBarItem.image = .init(systemName: "book")
+        return comicsNavigationController
     }
     
-    private func makeFavoritesTabBarItem() -> UIViewController {
-        let favoritesViewController = factory.makeFavoritesViewController()
-        favoritesViewController.delegate = self
-        favoritesViewController.tabBarItem.title = "Favorites"
-        favoritesViewController.tabBarItem.image = .init(systemName: "heart")
-        return favoritesViewController
+    private func makeFavoritesNavigationController() -> UINavigationController {
+        let favoritesNavigationController = UINavigationController()
+        favoritesNavigationController.tabBarItem.title = "Favorites"
+        favoritesNavigationController.tabBarItem.image = .init(systemName: "heart")
+        return favoritesNavigationController
     }
-}
-
-extension AppCoordinator: ComicsViewControllerDelegate {
-    func comicsViewController(didTapComic comic: ComicModel) {
-        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
-        navigationController.pushViewController(detailsViewController, animated: true)
+    
+    private func setupComicsCoordinator(with navigationController: UINavigationController) {
+        let comicsCoordinator = ComicsCoordinator(navigationController: navigationController, factory: factory)
+        comicsCoordinator.parentCoordinator = self
+        children.append(comicsCoordinator)
+        comicsCoordinator.start()
     }
-}
-
-extension AppCoordinator: FavoritesViewControllerDelegate {
-    func favoritesViewController(didTapComic comic: ComicModel) {
-        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
-        navigationController.pushViewController(detailsViewController, animated: true)
+    
+    private func setupFavoritesCoordinator(with navigationController: UINavigationController) {
+        let favoritesCoordinator = FavoritesCoordinator(navigationController: navigationController, factory: factory)
+        favoritesCoordinator.parentCoordinator = self
+        children.append(favoritesCoordinator)
+        favoritesCoordinator.start()
     }
+    
+    
+//    private func makeComicsTabBarItem() -> UIViewController {
+//    }
+//
+//    private func makeFavoritesTabBarItem() -> UIViewController {
+//    }
 }

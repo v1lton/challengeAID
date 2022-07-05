@@ -8,7 +8,7 @@
 import Swinject
 import UIKit
 
-class ViewControllerFactory: ViewControllerFactoryProtocol {
+class AppFactory: AppFactoryType {
     
     // MARK: - PRIVATE PROPERTIES
     
@@ -32,5 +32,13 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     
     public func makeFavoritesViewController() -> FavoritesViewController {
         return resolver.resolveUnwrapping(FavoritesViewController.self)
+    }
+    
+    public func makeComicsCoordinator(with navigationController: UINavigationController) -> ComicsCoordinatorType {
+        return resolver.resolveUnwrapping(ComicsCoordinatorType.self, argument: navigationController)
+    }
+    
+    public func makeFavoritesCoordinator(with navigationController: UINavigationController) -> FavoritesCoordinatorType {
+        return resolver.resolveUnwrapping(FavoritesCoordinatorType.self, argument: navigationController)
     }
 }

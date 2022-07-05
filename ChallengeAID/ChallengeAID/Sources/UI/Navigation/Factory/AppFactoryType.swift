@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ViewControllerFactoryProtocol {
+protocol AppFactoryType {
+    func makeComicsCoordinator(with navigationController: UINavigationController) -> ComicsCoordinatorType
+    func makeFavoritesCoordinator(with navigationController: UINavigationController) -> FavoritesCoordinatorType
     func makeComicsViewController() -> ComicsViewController
     func makeDetailsViewController(_ model: DetailsModel) -> DetailsViewController
     func makeFavoritesViewController() -> FavoritesViewController
