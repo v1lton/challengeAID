@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CharacterResponse: Codable {
+public struct CharacterDataWrapper: Codable {
     let code: Int?
     let status: String?
     let copyright: String?
@@ -27,7 +27,7 @@ struct CharacterResponse: Codable {
     }
 }
 
-struct CharacterDataContainer: Codable {
+public struct CharacterDataContainer: Codable {
     let offset: Int?
     let limit: Int?
     let total: Int?
@@ -44,50 +44,18 @@ struct CharacterDataContainer: Codable {
 }
 
 struct Character: Codable {
-    let id: Int
-    let name, description: String
-    let modified: Date
-    let thumbnail: Thumbnail
-    let resourceURI: String
-    let comics, series: Comics
-    let stories: Stories
-    let events: Comics
-    let urls: [URLElement]
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, description
-        case modified, thumbnail, resourceURI, comics, series, stories, events, urls
-    }
+    let id: Int?
+    let name: String?
+    let description: String?
+    let thumbnail: Thumbnail?
+    let comics: ComicList?
 }
 
-struct Comics: Codable {
+struct ComicList: Codable {
     let available: Int
     let collectionURI: String
-    let items: [ComicsItem]
+    let items: [ComicSummary]
     let returned: Int
-}
-
-struct ComicsItem: Codable {
-    let resourceURI: String
-    let name: String
-}
-
-struct Stories: Codable {
-    let available: Int
-    let collectionURI: String
-    let items: [StoriesItem]
-    let returned: Int
-}
-
-struct StoriesItem: Codable {
-    let resourceURI: String
-    let name: String
-    let type: TypeEnum
-}
-
-enum TypeEnum: String, Codable {
-    case cover = "cover"
-    case interiorStory = "interiorStory"
 }
 
 struct Thumbnail: Codable {
@@ -100,7 +68,7 @@ struct Thumbnail: Codable {
     }
 }
 
-struct URLElement: Codable {
-    let type: String
-    let url: String
+public struct ComicSummary: Codable {
+    let resourceURI: String?
+    let name: String
 }

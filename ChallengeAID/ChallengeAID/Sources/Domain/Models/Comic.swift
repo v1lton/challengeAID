@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ComicsResponse: Codable {
+public struct ComicDataWrapper: Codable {
     let code: Int?
     let status: String?
     let copyright: String?

@@ -16,7 +16,7 @@ class ComicsUseCase: ComicsUseCaseType {
     // MARK: - ALIASES
     
     typealias UseCaseEventType = Result<[ComicModel]?, Error>
-    typealias ServiceReturningType = Result<ComicsResponse, Error>
+    typealias ServiceReturningType = Result<ComicDataWrapper, Error>
     
     // MARK: - PRIVATE PROPERTIES
     
@@ -89,7 +89,7 @@ class ComicsUseCase: ComicsUseCaseType {
         }
     }
     
-    private func handleSuccess(_ data: ComicsResponse) -> UseCaseEventType {
+    private func handleSuccess(_ data: ComicDataWrapper) -> UseCaseEventType {
         let comics = data.data?.results
         let comicObjects: [ComicModel]? = comics?.compactMap({ comic in
             return convertComicToModel(comic)
