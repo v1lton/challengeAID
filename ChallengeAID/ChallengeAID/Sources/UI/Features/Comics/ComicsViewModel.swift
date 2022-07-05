@@ -19,7 +19,7 @@ class ComicsViewModel: ComicsViewModelProtocol {
     
     // MARK: - PUBLIC PROPERTIES
     
-    var viewState: BehaviorSubject<ComicsViewState> = .init(value: .loading)
+    var viewState: BehaviorSubject<ComicsViewState> = .init(value: .loading(asPagination: false))
     var isPaginating: Bool = false
     var filterModel: FilterSearchModel?
     
@@ -50,37 +50,36 @@ class ComicsViewModel: ComicsViewModelProtocol {
         comicManager.create(comicObject)
     }
     
-    func retrieveComics(pagination: Bool) {
-        if pagination {
-            isPaginating = true
-        }
-        let offset = !pagination ? 0 : (comics?.count ?? 0 + 1)
+    func retrieveComics(asPagination: Bool) {
+        isPaginating = asPagination
+        let offset = !asPagination ? 0 : (comics?.count ?? 0 + 1)
+        viewState.onNext(.loading(asPagination: asPagination))
         comicsUseCase.execute(with: .init(offset: offset))
             .subscribeOnMainDisposed(by: disposeBag) { [weak self] result in
                 self?.isPaginating = false
-                self?.handleRetrieveComics(result)
+                self?.handleRetrieveComics(result, asPagination: asPagination)
             }
     }
     
     // MARK: - HANDLERS
     
-    private func handleRetrieveComics(_ response: Result<[ComicModel]?, Error>) {
+    private func handleRetrieveComics(_ response: Result<[ComicModel]?, Error>, asPagination: Bool) {
         switch response {
         case .success(let comics):
-            handleSuccess(comics)
+            handleSuccess(comics, asPagination: asPagination)
         case .failure(let error):
             handleError(error)
         }
     }
     
-    private func handleSuccess(_ comics: [ComicModel]?) {
+    private func handleSuccess(_ comics: [ComicModel]?, asPagination: Bool) {
         guard let comics = comics else { return handleEmptyComics() }
         if self.comics == nil {
             self.comics = comics
         } else {
             self.comics?.append(contentsOf: comics)
         }
-        viewState.onNext(.content(comics))
+        viewState.onNext(.success(asPagination: asPagination))
     }
     
     private func handleEmptyComics() { }

@@ -50,6 +50,7 @@ class EntityTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupComponents()
         addViewHierarchy()
         constraintUI()
@@ -64,8 +65,9 @@ class EntityTableViewCell: UITableViewCell {
     func setupCell(with model: EntityCellModel) {
         self.title.text = model.title
         self.details.text = model.description
-        let fullPath = "\(model.imagePath ?? "")/portrait_fantastic.\(model.imageExtension ?? "")"
-        self.picture.sd_setImage(with: URL(string: fullPath)) //TODO: fix it
+        let fullPath = "\(model.imagePath ?? "")/portrait_fantastic.\(model.imageExtension ?? "")" //TODO: Improve it
+        self.picture.sd_setImage(with: URL(string: fullPath),
+                                 placeholderImage: UIImage(named: "portrait_placeholder")) //TODO: fix it
     }
     
     // MARK: - SETUP

@@ -6,7 +6,7 @@
 //
 
 enum ComicsViewState {
-    case loading
-    case content(_ content: [ComicModel])
+    case loading(asPagination: Bool)
+    case success(asPagination: Bool)
     case error(_ error: Error)
 }

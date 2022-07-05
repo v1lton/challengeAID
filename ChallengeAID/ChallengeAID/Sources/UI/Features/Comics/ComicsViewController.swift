@@ -42,6 +42,24 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         return searchController
     }()
     
+    private lazy var spinner: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isHidden = true
+        return indicator
+    }()
+    
+    private lazy var feedbackLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textColor = .systemGray
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
     // MARK: - LIFE CYCLE
     
     init(viewModel: ComicsViewModelProtocol) {
@@ -55,7 +73,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.retrieveComics(pagination: false)
+        viewModel.retrieveComics(asPagination: false)
         setupView()
         setupNavigationBar()
         buildViewHierarchy()
@@ -66,19 +84,32 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     // MARK: - SETUP
     
     private func setupView() {
+        view.backgroundColor = .systemBackground
         title = "Comics"
     }
     
     private func buildViewHierarchy() {
         view.addSubview(comicsTableView)
+        view.addSubview(spinner)
+        view.addSubview(feedbackLabel)
     }
     
     private func constraintUI() {
         NSLayoutConstraint.activate([
+            spinner.topAnchor.constraint(equalTo: view.topAnchor),
+            spinner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            spinner.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            spinner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
             comicsTableView.topAnchor.constraint(equalTo: view.topAnchor),
             comicsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             comicsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            comicsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            comicsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
+            feedbackLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            feedbackLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            feedbackLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            feedbackLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
     
@@ -95,8 +126,6 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         navigationItem.searchController = searchBar
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationItem.title = title
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         definesPresentationContext = true
     }
     
@@ -104,24 +133,28 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     private func handleViewState(_ viewState: ComicsViewState) {
         switch viewState {
-        case .loading:
-            handleLoading()
-        case .content(let content):
-            handleContent(content)
+        case .loading(let asPagination):
+            handleLoading(asPagination: asPagination)
+        case .success(let asPagination):
+            handleContent(asPagination: asPagination)
         case .error(let error):
             handleError(error)
         }
     }
     
-    private func handleLoading() { }
+    private func handleLoading(asPagination: Bool) {
+        asPagination ? startPaginationLoadingAnimation() : startScreenLoadingAnimation()
+    }
     
-    private func handleContent(_ content: [ComicModel]) {
-        comicsTableView.tableFooterView = nil
+    private func handleContent(asPagination: Bool) {
+        asPagination ? stopPaginationLoadingAnimation() : stopScreenLoadingAnimation()
         comicsTableView.reloadData()
     }
     
     private func handleError(_ error: Error) {
-        print(error.localizedDescription)
+        stopScreenLoadingAnimation()
+        stopPaginationLoadingAnimation()
+        showFeebackErrorLabel(error)
     }
     
     // MARK: - PRIVATE FUNCTIONS
@@ -133,6 +166,33 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         footerView.addSubview(spinner)
         spinner.startAnimating()
         return footerView
+    }
+    
+    private func startPaginationLoadingAnimation() {
+        comicsTableView.tableFooterView = createSpinnerFooter()
+    }
+    
+    private func stopPaginationLoadingAnimation() {
+        comicsTableView.tableFooterView = nil
+    }
+    
+    private func startScreenLoadingAnimation() {
+        comicsTableView.isHidden = true
+        spinner.isHidden = false
+        spinner.startAnimating()
+    }
+    
+    private func stopScreenLoadingAnimation() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        comicsTableView.isHidden = false
+    }
+    
+    private func showFeebackErrorLabel(_ error: Error) {
+        comicsTableView.isHidden = true
+        navigationItem.searchController?.searchBar.isHidden = true
+        feedbackLabel.text = "We had problems fetching data. Error: \(error.localizedDescription)"
+        feedbackLabel.isHidden = false
     }
 }
 
@@ -166,8 +226,7 @@ extension ComicsViewController: UITableViewDataSource {
         guard let comicsCount = viewModel.getComics()?.count else { return }
         if indexPath.row == comicsCount - 3 {
             guard !viewModel.isPaginating else { return }
-            viewModel.retrieveComics(pagination: true)
-            self.comicsTableView.tableFooterView = createSpinnerFooter()
+            viewModel.retrieveComics(asPagination: true)
         }
     }
 }

@@ -95,7 +95,7 @@ class DetailsViewController: UIViewController {
     // MARK: - SETUP
     
     private func setupComponents() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setImage()
         
         let model = viewModel.getComic()

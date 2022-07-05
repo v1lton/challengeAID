@@ -18,6 +18,12 @@ class FavoritesViewController: UIViewController {
     private var viewModel: FavoritesViewModelType
     private let reuseIdentifier = "EntityTableViewCell"
     
+    private var isEmpty: Bool = true {
+        didSet {
+            handleEmptyView()
+        }
+    }
+    
     // MARK: - PUBLIC PROPERTIES
     
     weak var delegate: FavoritesViewControllerDelegate?
@@ -43,6 +49,17 @@ class FavoritesViewController: UIViewController {
         return searchController
     }()
     
+    private lazy var emptyFavoritesLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textColor = .systemGray
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.text = "Oh! You don't have favorites comics"
+        return label
+    }()
+    
     // MARK: - LIFE CYCLE
     
     init(viewModel: FavoritesViewModelType) {
@@ -56,8 +73,8 @@ class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupView()
+        setupNavigationBar()
         buildViewHierarchy()
         constraintUI()
     }
@@ -71,14 +88,21 @@ class FavoritesViewController: UIViewController {
     
     private func setupView() {
         title = "Favorites"
+        view.backgroundColor = .systemBackground
     }
     
     private func buildViewHierarchy() {
         view.addSubview(comicsTableView)
+        view.addSubview(emptyFavoritesLabel)
     }
     
     private func constraintUI() {
         NSLayoutConstraint.activate([
+            emptyFavoritesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyFavoritesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyFavoritesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            emptyFavoritesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
             comicsTableView.topAnchor.constraint(equalTo: view.topAnchor),
             comicsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             comicsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -90,16 +114,27 @@ class FavoritesViewController: UIViewController {
         navigationItem.searchController = searchBar
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationItem.title = title
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         definesPresentationContext = true
+    }
+    
+    private func handleEmptyView() {
+        emptyFavoritesLabel.isHidden = !isEmpty
+        comicsTableView.isHidden = isEmpty
+        navigationItem.searchController?.searchBar.isHidden = isEmpty
+        view.layoutIfNeeded()
     }
 }
 
 extension FavoritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getComics()?.count ?? 0
+        if let comicsCount = viewModel.getComics()?.count,
+           comicsCount > 0 {
+            isEmpty = false
+            return comicsCount
+        }
+        isEmpty = true
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
