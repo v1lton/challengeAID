@@ -15,6 +15,7 @@ class DetailsViewController: UIViewController {
     // MARK: - PRIVATE PROPERTIES
     
     private let viewModel: DetailsViewModelProtocol
+    private let reuseIdentifier = "TableViewCell"
     
     // MARK: - UI
     
@@ -63,6 +64,16 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    private lazy var charactersTableView: UITableView = {
+        let tableView = UITableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isScrollEnabled = false
+        return tableView
+    }()
+    
     // MARK: - LIFE CYCLE
     
     init(viewModel: DetailsViewModelProtocol) {
@@ -97,6 +108,7 @@ class DetailsViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(bodyStackView)
         scrollView.addSubview(imageView)
+        scrollView.addSubview(charactersTableView)
         bodyStackView.addArrangedSubview(detailsTitle)
         bodyStackView.addArrangedSubview(detailsDescription)
         bodyStackView.addArrangedSubview(detailsSwitch)
@@ -116,23 +128,71 @@ class DetailsViewController: UIViewController {
             
             bodyStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bodyStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            charactersTableView.topAnchor.constraint(equalTo: bodyStackView.bottomAnchor, constant: 16),
+            charactersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            charactersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            charactersTableView.heightAnchor.constraint(equalToConstant: CGFloat(viewModel.getTableViewCount() * 50)),
+            charactersTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
     
     // MARK: - PRIVATE METHODS
     
     private func setImage() {
-        print("cheguei")
         guard let imagePath = viewModel.getComic().imagePath,
               let imageExtension = viewModel.getComic().imageExtension else { return }
-        let fullPath = "\(imagePath)/landscape_incredible.\(imageExtension)"
-        print(fullPath)
+        let fullPath = "\(imagePath)/landscape_incredible.\(imageExtension)" //TODO: Improve it
         imageView.sd_setImage(with: URL(string: fullPath))
     }
     
     @objc private func switchChanged(_ sender: UISwitch) {
         sender.isOn ? viewModel.favoriteComic() : viewModel.unfavoriteComic()
     }
+}
+
+extension DetailsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Characters"
+        } else {
+            return "Creators"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return viewModel.getCharacters()?.count ?? 0
+        } else {
+            return viewModel.getComic().creators?.count ?? 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        
+        if indexPath.section == 0 {
+            let characters = viewModel.getCharacters()
+            guard let character = characters?[indexPath.row] else { return cell }
+            cell.textLabel?.text = character.name
+            cell.detailTextLabel?.text = character.role
+        } else {
+            let creators = viewModel.getCreators()
+            guard let creator = creators?[indexPath.row] else { return cell }
+            cell.textLabel?.text = creator.name
+            cell.detailTextLabel?.text = creator.role
+        }
+        
+        return cell
+    }
+}
+
+extension DetailsViewController: UITableViewDelegate {
+    
 }

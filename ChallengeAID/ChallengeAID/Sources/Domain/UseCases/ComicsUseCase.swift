@@ -61,7 +61,21 @@ class ComicsUseCase: ComicsUseCaseType {
                           description: comic.description,
                           imagePath: comic.images?.first?.path,
                           imageExtension: comic.images?.first?.imageExtension,
+                          characters: convertCharaterListToModel(comic.characters),
+                          creators: convertCreatorListToModel(comic.creators),
                           isFavorite: comicObjectManager.isComicFavorite(String(id)))
+    }
+    
+    private func convertCharaterListToModel(_ characterList: CharacterList?) -> [ComicModel.CharacterModel]? {
+        return characterList?.items?.compactMap({ list in
+            return .init(from: list)
+        })
+    }
+    
+    private func convertCreatorListToModel(_ creatorList: CreatorList?) -> [ComicModel.CharacterModel]? {
+        return creatorList?.items?.compactMap({ list in
+            return .init(from: list)
+        })
     }
     
     // MARK: - HANDLERS

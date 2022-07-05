@@ -49,6 +49,8 @@ class FavoritesViewModel: FavoritesViewModelType {
                          description: object.comicDescription,
                          imagePath: object.imagePath,
                          imageExtension: object.imageExtension,
+                         characters: nil,
+                         creators: nil,
                          isFavorite: true)
         }
         return nil
