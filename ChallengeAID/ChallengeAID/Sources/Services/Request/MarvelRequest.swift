@@ -13,7 +13,7 @@ struct MarvelRequest: Request {
     
     enum Req {
         case comics(model: ComicsRequestModel)
-        case characters
+        case characters(characterId: String)
     }
     
     let cases: Req
@@ -64,7 +64,8 @@ struct MarvelRequest: Request {
         case .comics(let request):
             queryItems.append(contentsOf: request.asQueryItens())
             return queryItems
-        case .characters:
+        case .characters(let characterId):
+            queryItems.append(URLQueryItem(name: "characterId", value: characterId))
             return queryItems
         }
     }
