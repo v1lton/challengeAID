@@ -20,11 +20,11 @@ class CharactersUseCase: CharactersUseCaseType {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let networking: NetworkingOperationProtocol
+    private let networking: NetworkingOperationType
     
     // MARK: - INITIALIZERS
     
-    init(networking: NetworkingOperationProtocol) {
+    init(networking: NetworkingOperationType) {
         self.networking = networking
     }
     

@@ -210,7 +210,6 @@
 				49059C3C2872139400E779AC /* CoreData */,
 				49059BFF2870959E00E779AC /* DependencyInjection */,
 				49059BFE2870959800E779AC /* Domain */,
-				49059BFD2870959200E779AC /* Services */,
 				49059BFC2870958C00E779AC /* UI */,
 			);
 			path = Sources;
@@ -249,6 +248,7 @@
 		49059BFE2870959800E779AC /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				49059BFD2870959200E779AC /* Services */,
 				49059C582873079200E779AC /* UseCases */,
 				49059C212870D53900E779AC /* Models */,
 			);

@@ -21,11 +21,11 @@ class ComicsUseCase: ComicsUseCaseType {
     // MARK: - PRIVATE PROPERTIES
     
     private let comicObjectManager: ComicObjectManagerType
-    private let networking: NetworkingOperationProtocol
+    private let networking: NetworkingOperationType
     
     // MARK: - INITIALIZERS
     
-    init(networking: NetworkingOperationProtocol, comicObjectManager: ComicObjectManagerType) {
+    init(networking: NetworkingOperationType, comicObjectManager: ComicObjectManagerType) {
         self.networking = networking
         self.comicObjectManager = comicObjectManager
     }

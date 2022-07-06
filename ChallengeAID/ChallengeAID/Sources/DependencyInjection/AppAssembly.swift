@@ -40,7 +40,7 @@ class AppAssembly: Assembly {
         
         // MARK: - Networking
         
-        container.register(NetworkingOperationProtocol.self) { _ in
+        container.register(NetworkingOperationType.self) { _ in
             return NetworkingOperation()
         }
         
@@ -53,13 +53,13 @@ class AppAssembly: Assembly {
         // MARK: - Use Cases
         
         container.register(ComicsUseCaseType.self) { resolver in
-            let networking = resolver.resolveUnwrapping(NetworkingOperationProtocol.self)
+            let networking = resolver.resolveUnwrapping(NetworkingOperationType.self)
             let comicObjectManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
             return ComicsUseCase(networking: networking, comicObjectManager: comicObjectManager)
         }
         
         container.register(CharactersUseCaseType.self) { resolver in
-            let networking = resolver.resolveUnwrapping(NetworkingOperationProtocol.self)
+            let networking = resolver.resolveUnwrapping(NetworkingOperationType.self)
             return CharactersUseCase(networking: networking)
         }
 

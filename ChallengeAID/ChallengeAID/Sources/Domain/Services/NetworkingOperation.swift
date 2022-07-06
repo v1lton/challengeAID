@@ -8,12 +8,12 @@
 import Foundation
 import Dispatch
 
-public protocol NetworkingOperationProtocol: AnyObject {
+public protocol NetworkingOperationType: AnyObject {
     func request<ResponseType: Codable>(request: Request, completion: @escaping(Result<ResponseType, Error>) -> ())
     func request<ResponseType: Codable>(requests: [Request], completion: @escaping (Result<[ResponseType], Error>) -> ())
 }
 
-public class NetworkingOperation: NetworkingOperationProtocol {
+public class NetworkingOperation: NetworkingOperationType {
     
     // MARK: - PUBLIC FUNCTIONS
     
@@ -57,11 +57,11 @@ public class NetworkingOperation: NetworkingOperationProtocol {
         let dataTask = session.dataTask(with: urlRequest) { data, response, error in
             
             guard error == nil else {
-                completion(.failure(error!)) //TODO: fix force cast
+                let error = NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch request"])
                 return
             }
-            
-            guard response != nil, let data = data else { return }
+            guard response != nil,
+                  let data = data else { return }
             
             DispatchQueue.main.async {
                 if let responseObject = try? JSONDecoder().decode(ResponseType.self, from: data) {
@@ -83,9 +83,11 @@ public class NetworkingOperation: NetworkingOperationProtocol {
         components.host = request.baseURL
         components.path = request.path
         components.queryItems = request.parameters
+        
         guard let url = components.url else { return nil }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.name
+        
         return urlRequest
     }
 }

@@ -20,7 +20,6 @@ public enum HTTPMethod: String {
 }
 
 public protocol Request {
-    
     var scheme: String { get }
     var method: HTTPMethod { get }
     var baseURL: String { get }
