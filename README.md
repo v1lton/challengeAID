@@ -14,7 +14,7 @@ The app architecture were build considering oriented programming concepts. This 
 
 ## Dependencies
 
-Some dependencies were used to help build this app with Swift Package Manager:
+Some dependencies were used to help build this app. For depedencies managment I used Swift Package Manager:
 
 * RxSwift 6.5.0
 * SDWebImage 5.13.0
