@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol FavoritesCoordinatorType: Coordinator { }
+protocol FavoritesCoordinatorType: CoordinatorType { }
 
 class FavoritesCoordinator: FavoritesCoordinatorType {
     
     // MARK: - PUBLIC PROPERTIES
     
-    var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
+    var parentCoordinator: CoordinatorType?
+    var children: [CoordinatorType] = []
     
     // MARK: - PRIVATE PROPERTIES
     

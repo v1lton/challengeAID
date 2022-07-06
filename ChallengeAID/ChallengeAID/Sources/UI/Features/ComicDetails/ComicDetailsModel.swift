@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailsModel {
+struct ComicDetailsModel {
     let comic: ComicModel
     var characters: [CharacterModel]?
     

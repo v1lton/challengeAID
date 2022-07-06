@@ -36,9 +36,7 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
     
     private lazy var searchBar: UISearchController = {
         let searchController = UISearchController()
-        searchController.delegate = self
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for comic title"
         return searchController
     }()
@@ -212,7 +210,9 @@ extension ComicsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EntityTableViewCell //TODO: fix force cast
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EntityTableViewCell else {
+            return UITableViewCell()
+        }
         let comics = viewModel.getComics()
         guard let comic = comics?[indexPath.row] else { return cell }
         cell.setupCell(with: .init(title: comic.title,
@@ -232,8 +232,6 @@ extension ComicsViewController: UITableViewDataSource {
     }
 }
 
-extension ComicsViewController: UISearchControllerDelegate { }
-
 extension ComicsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text,
@@ -245,5 +243,3 @@ extension ComicsViewController: UISearchResultsUpdating {
         comicsTableView.reloadData()
     }
 }
-
-extension ComicsViewController: UISearchBarDelegate { }

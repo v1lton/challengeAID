@@ -20,7 +20,7 @@ class AppAssembly: Assembly {
         
         // MARK: - Coordinators
         
-        container.register(Coordinator.self) { (resolver, navigationController: UINavigationController) in
+        container.register(CoordinatorType.self) { (resolver, navigationController: UINavigationController) in
             let factory = resolver.resolveUnwrapping(AppFactoryType.self)
             return AppCoordinator(navigationController: navigationController,
                                   factory: factory)
@@ -78,17 +78,17 @@ class AppAssembly: Assembly {
         
         // MARK: - DetailsViewController
         
-        container.register(DetailsViewModelProtocol.self) { (resolver, model: DetailsModel) in
+        container.register(ComicDetailsViewModelType.self) { (resolver, model: ComicDetailsModel) in
             let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
             let charactersUseCase = resolver.resolveUnwrapping(CharactersUseCaseType.self)
-            return DetailsViewModel(model: model,
+            return ComicDetailsViewModel(model: model,
                                     comicManager: comicManager,
                                     charactersUseCase: charactersUseCase)
         }
         
-        container.register(DetailsViewController.self) { (resolver, model: DetailsModel) in
-            let viewModel = resolver.resolveUnwrapping(DetailsViewModelProtocol.self, argument: model)
-            return DetailsViewController(viewModel: viewModel)
+        container.register(ComicDetailsViewController.self) { (resolver, model: ComicDetailsModel) in
+            let viewModel = resolver.resolveUnwrapping(ComicDetailsViewModelType.self, argument: model)
+            return ComicDetailsViewController(viewModel: viewModel)
         }
         
         // MARK: - FavoritesViewController

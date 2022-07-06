@@ -7,12 +7,12 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator {
+class AppCoordinator: CoordinatorType {
     
     // MARK: - PUBLIC PROPERTIES
     
-    var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
+    var parentCoordinator: CoordinatorType?
+    var children: [CoordinatorType] = []
     
     // MARK: - PRIVATE PROPERTIES
     
@@ -31,8 +31,6 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: - PUBLIC FUNCTIONS
-    
-    
     
     public func start() {
         let tabBarController = UITabBarController()

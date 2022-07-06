@@ -10,13 +10,13 @@ import RxSwift
 import SDWebImage
 import UIKit
 
-protocol DetailsViewControllerProtocol { }
+protocol ComicDetailsViewControllerProtocol { }
 
-class DetailsViewController: UIViewController {
+class ComicDetailsViewController: UIViewController {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let viewModel: DetailsViewModelProtocol
+    private let viewModel: ComicDetailsViewModelType
     private let disposeBag = DisposeBag()
     private let reuseCustomIdentifier = "EntityTableViewCell"
     private let reuseDefaultIdentifier = "DefaultTableViewCell"
@@ -96,7 +96,6 @@ class DetailsViewController: UIViewController {
         tableView.register(EntityTableViewCell.self, forCellReuseIdentifier: reuseCustomIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 182
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
         return tableView
@@ -111,7 +110,7 @@ class DetailsViewController: UIViewController {
     
     // MARK: - LIFE CYCLE
     
-    init(viewModel: DetailsViewModelProtocol) {
+    init(viewModel: ComicDetailsViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -197,7 +196,7 @@ class DetailsViewController: UIViewController {
     
     // MARK: - HANDLERS
     
-    private func handleViewState(_ viewState: DetailsViewState) {
+    private func handleViewState(_ viewState: ComicDetailsViewState) {
         switch viewState {
         case .loading:
             handleLoading()
@@ -246,9 +245,32 @@ class DetailsViewController: UIViewController {
     @objc private func switchChanged(_ sender: UISwitch) {
         sender.isOn ? viewModel.favoriteComic() : viewModel.unfavoriteComic()
     }
+    
+    private func setupCharacterTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseCustomIdentifier, for: indexPath) as? EntityTableViewCell else {
+            return UITableViewCell()
+        }
+        let characters = viewModel.getCharacters()
+        guard let character = characters?[indexPath.row] else { return cell }
+        cell.setupCell(with: .init(title: character.name,
+                                   description: character.description,
+                                   imagePath: character.imagePath,
+                                   imageExtension: character.imageExtension,
+                                   isFavorite: false))
+        return cell
+    }
+    
+    private func setupCreatorTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseDefaultIdentifier, for: indexPath)
+        let creators = viewModel.getCreators()
+        guard let creator = creators?[indexPath.row] else { return cell }
+        cell.textLabel?.text = creator.name
+        cell.detailTextLabel?.text = creator.role
+        return cell
+    }
 }
 
-extension DetailsViewController: UITableViewDataSource {
+extension ComicDetailsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -271,28 +293,10 @@ extension DetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: reuseCustomIdentifier, for: indexPath) as! EntityTableViewCell //TODO: fix force cast
-            let characters = viewModel.getCharacters()
-            guard let character = characters?[indexPath.row] else { return cell }
-            cell.setupCell(with: .init(title: character.name,
-                                       description: character.description,
-                                       imagePath: character.imagePath,
-                                       imageExtension: character.imageExtension,
-                                       isFavorite: false))
-            return cell
+            return setupCharacterTableViewCell(tableView, cellForRowAt: indexPath)
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: reuseDefaultIdentifier, for: indexPath)
-            let creators = viewModel.getCreators()
-            guard let creator = creators?[indexPath.row] else { return cell }
-            cell.textLabel?.text = creator.name
-            cell.detailTextLabel?.text = creator.role
-            return cell
+            return setupCreatorTableViewCell(tableView, cellForRowAt: indexPath)
         }
     }
-}
-
-extension DetailsViewController: UITableViewDelegate {
-    
 }

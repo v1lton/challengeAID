@@ -26,8 +26,8 @@ class AppFactory: AppFactoryType {
         return resolver.resolveUnwrapping(ComicsViewController.self)
     }
     
-    public func makeDetailsViewController(_ model: DetailsModel) -> DetailsViewController {
-        return resolver.resolveUnwrapping(DetailsViewController.self, argument: model)
+    public func makeDetailsViewController(_ model: ComicDetailsModel) -> ComicDetailsViewController {
+        return resolver.resolveUnwrapping(ComicDetailsViewController.self, argument: model)
     }
     
     public func makeFavoritesViewController() -> FavoritesViewController {

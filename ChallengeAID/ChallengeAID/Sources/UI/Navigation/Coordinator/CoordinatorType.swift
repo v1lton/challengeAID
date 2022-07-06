@@ -7,10 +7,15 @@
 
 import UIKit
 
-protocol Coordinator {
-    var parentCoordinator: Coordinator? { get set }
-    var children: [Coordinator] { get set }
+protocol CoordinatorType {
+    
+    // MARK: - PROPERTIES
+    
+    var parentCoordinator: CoordinatorType? { get set }
+    var children: [CoordinatorType] { get set }
     var navigationController: UINavigationController { get set }
+    
+    // MARK: - FUNCTIONS
     
     func start()
 }

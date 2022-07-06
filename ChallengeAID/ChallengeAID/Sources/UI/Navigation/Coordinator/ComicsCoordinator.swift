@@ -9,14 +9,14 @@ import Foundation
 
 import UIKit
 
-protocol ComicsCoordinatorType: Coordinator { }
+protocol ComicsCoordinatorType: CoordinatorType { }
 
 class ComicsCoordinator: ComicsCoordinatorType {
     
     // MARK: - PUBLIC PROPERTIES
     
-    var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
+    var parentCoordinator: CoordinatorType?
+    var children: [CoordinatorType] = []
     
     // MARK: - PRIVATE PROPERTIES
     

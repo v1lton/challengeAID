@@ -8,42 +8,22 @@
 import RxSwift
 import CoreGraphics
 
-enum DetailsViewState {
-    case loading
-    case success
-    case error(_ error: Error)
-}
-
-protocol DetailsViewModelProtocol {
-    
-    var viewState: BehaviorSubject<DetailsViewState> { get }
-    
-    func getComic() -> ComicModel
-    func favoriteComic()
-    func unfavoriteComic()
-    func getCharacters() -> [CharacterModel]?
-    func getCreators() -> [ComicModel.Character]?
-    func getTableViewHeight() -> CGFloat
-    func retrieveCharacters()
-    func getNumberOfSections() -> Int
-}
-
-class DetailsViewModel: DetailsViewModelProtocol {
+class ComicDetailsViewModel: ComicDetailsViewModelType {
     
     // MARK: - PRIVATE PROPERTIES
     
     private let comicManager: ComicObjectManagerType
     private let charactersUseCase: CharactersUseCaseType
-    private var model: DetailsModel
+    private var model: ComicDetailsModel
     private let disposeBag = DisposeBag()
     
     // MARK: - PUBLIC PROPERTIES
     
-    var viewState: BehaviorSubject<DetailsViewState> = .init(value: .loading)
+    var viewState: BehaviorSubject<ComicDetailsViewState> = .init(value: .loading)
     
     // MARK: - INITIALIZER
     
-    init(model: DetailsModel,
+    init(model: ComicDetailsModel,
          comicManager: ComicObjectManagerType,
          charactersUseCase: CharactersUseCaseType) {
         self.model = model
