@@ -182,7 +182,6 @@
 				49059BC62870944600E779AC /* AppDelegate.swift */,
 				49059BC82870944600E779AC /* SceneDelegate.swift */,
 				49059BD72870944700E779AC /* Info.plist */,
-				49059BCF2870944600E779AC /* ChallengeAID.xcdatamodeld */,
 			);
 			path = ChallengeAID;
 			sourceTree = "<group>";
@@ -348,6 +347,7 @@
 		49059C3C2872139400E779AC /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				49059BCF2870944600E779AC /* ChallengeAID.xcdatamodeld */,
 				49059C3D2872139D00E779AC /* Managers */,
 			);
 			path = CoreData;

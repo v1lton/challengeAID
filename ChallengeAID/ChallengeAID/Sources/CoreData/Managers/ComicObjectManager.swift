@@ -18,7 +18,9 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     
     // MARK: - PRIVATE PROPERTIES
     
-    private let entityName = "ComicManagedObject"
+    private let comicEntityName = "ComicManagedObject"
+    private let characterEntityName = "CharacterManagedObject"
+    private let creatorEntityName = "CreatorManagedObject"
     
     // MARK: - PRIVATE FUNCTIONS
     
@@ -33,7 +35,7 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     private func makeCharactersSet(from characters: [ComicModel.Character]?, for comic: ComicManagedObject) {
         guard let characters = characters else { return }
         for character in characters {
-            let characterObject = NSEntityDescription.insertNewObject(forEntityName: "CharacterManagedObject", into: coreDataContext)
+            let characterObject = NSEntityDescription.insertNewObject(forEntityName: characterEntityName, into: coreDataContext)
             if let object = characterObject as? CharacterManagedObject {
                 object.comic = comic
                 object.resourceURI = character.resourceURI
@@ -48,7 +50,7 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     private func makeCreatorsSet(from creators: [ComicModel.Character]?, for comic: ComicManagedObject) {
         guard let creators = creators else { return }
         for creator in creators {
-            let creatorObject = NSEntityDescription.insertNewObject(forEntityName: "CreatorManagedObject", into: coreDataContext)
+            let creatorObject = NSEntityDescription.insertNewObject(forEntityName: creatorEntityName, into: coreDataContext)
             if let object = creatorObject as? CreatorManagedObject {
                 object.comic = comic
                 object.resourceURI = creator.resourceURI
@@ -63,9 +65,9 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     // MARK: - PUBLIC FUNCTIONS
     
     public func create(_ comic: ComicModel?) {
-        let comicObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: coreDataContext)
+        let comicObject = NSEntityDescription.insertNewObject(forEntityName: comicEntityName, into: coreDataContext)
         guard let object = comicObject as? ComicManagedObject else {
-            print("Could not create entity \(entityName)")
+            print("Could not create entity \(comicEntityName)")
             return
         }
         object.id = comic?.id
@@ -90,7 +92,7 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     
     public func delete(_ id: String?) {
         guard let id = id else { return }
-        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: entityName)
+        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: comicEntityName)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         do {
@@ -108,7 +110,7 @@ final class ComicObjectManager: EntityManager, ComicObjectManagerType {
     }
     
     public func fetchAll() -> [ComicManagedObject]? {
-        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: entityName)
+        let fetchRequest = NSFetchRequest<ComicManagedObject>(entityName: comicEntityName)
         do {
             let comics = try coreDataContext.fetch(fetchRequest)
             return comics
