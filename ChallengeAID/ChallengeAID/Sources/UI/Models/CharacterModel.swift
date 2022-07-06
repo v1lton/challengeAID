@@ -11,4 +11,12 @@ public struct CharacterModel {
     let imagePath: String?
     let imageExtension: String?
     let comics: [String]?
+    
+    func getImageUrl() -> String {
+        guard let imagePath = imagePath,
+              let imageExtension = imageExtension else {
+            return ""
+        }
+        return "\(imagePath)/landscape_incredible.\(imageExtension)"
+    }
 }

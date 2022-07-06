@@ -42,7 +42,15 @@ class FavoritesCoordinator: FavoritesCoordinatorType {
 
 extension FavoritesCoordinator: FavoritesViewControllerDelegate {
     func favoritesViewController(didTapComic comic: ComicModel) {
-        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
+        let detailsViewController = factory.makeComicDetailsViewController(.init(comic: comic))
+        detailsViewController.delegate = self
         navigationController.pushViewController(detailsViewController, animated: true)
+    }
+}
+
+extension FavoritesCoordinator: ComicDetailsViewControllerDelegate {
+    func comicsDetailsViewController(didTapCharacter character: CharacterModel) {
+        let characterDetailsViewController = factory.makeCharacterDetailsViewController(character)
+        navigationController.pushViewController(characterDetailsViewController, animated: true)
     }
 }

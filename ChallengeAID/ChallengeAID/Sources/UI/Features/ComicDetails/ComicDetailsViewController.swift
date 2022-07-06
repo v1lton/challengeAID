@@ -12,6 +12,10 @@ import UIKit
 
 protocol ComicDetailsViewControllerProtocol { }
 
+protocol ComicDetailsViewControllerDelegate: AnyObject {
+    func comicsDetailsViewController(didTapCharacter character: CharacterModel)
+}
+
 class ComicDetailsViewController: UIViewController {
     
     // MARK: - PRIVATE PROPERTIES
@@ -20,6 +24,10 @@ class ComicDetailsViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let reuseCustomIdentifier = "EntityTableViewCell"
     private let reuseDefaultIdentifier = "DefaultTableViewCell"
+    
+    // MARK: - PUBLIC PROPERTIES
+    
+    weak var delegate: ComicDetailsViewControllerDelegate?
     
     // MARK: - UI
     
@@ -97,6 +105,7 @@ class ComicDetailsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 182
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.isScrollEnabled = false
         return tableView
     }()
@@ -121,6 +130,7 @@ class ComicDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         setupComponents()
         buildViewHierarchy()
         constraintUI()
@@ -130,10 +140,13 @@ class ComicDetailsViewController: UIViewController {
     
     // MARK: - SETUP
     
-    private func setupComponents() {
+    private func setupView() {
         view.backgroundColor = .systemBackground
+        title = viewModel.getComic().title
+    }
+    
+    private func setupComponents() {
         setImage()
-        
         let model = viewModel.getComic()
         detailsTitle.text = model.title
         detailsDescription.text = model.description
@@ -297,6 +310,15 @@ extension ComicDetailsViewController: UITableViewDataSource {
             return setupCharacterTableViewCell(tableView, cellForRowAt: indexPath)
         } else {
             return setupCreatorTableViewCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+}
+
+extension ComicDetailsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            guard let character = viewModel.getCharacter(at: indexPath.row) else { return }
+            delegate?.comicsDetailsViewController(didTapCharacter: character)
         }
     }
 }

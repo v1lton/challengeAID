@@ -53,6 +53,11 @@ class ComicDetailsViewModel: ComicDetailsViewModelType {
         return model.characters
     }
     
+    func getCharacter(at index: Int) -> CharacterModel? {
+        guard let character = model.characters?[index] else { return nil }
+        return character
+    }
+    
     func getCreators() -> [ComicModel.Character]? {
         return model.comic.creators
     }

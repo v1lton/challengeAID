@@ -76,7 +76,7 @@ class AppAssembly: Assembly {
             return ComicsViewController(viewModel: viewModel)
         }
         
-        // MARK: - DetailsViewController
+        // MARK: - ComicsDetailsViewController
         
         container.register(ComicDetailsViewModelType.self) { (resolver, model: ComicDetailsModel) in
             let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
@@ -101,6 +101,17 @@ class AppAssembly: Assembly {
         container.register(FavoritesViewController.self) { resolver in
             let viewModel = resolver.resolveUnwrapping(FavoritesViewModelType.self)
             return FavoritesViewController(viewModel: viewModel)
+        }
+        
+        // MARK: - CharacterDetailsViewController
+        
+        container.register(CharacterDetailsViewModelType.self) { (resolver, model: CharacterModel) in
+            return CharacterDetailsViewModel(character: model)
+        }
+        
+        container.register(CharacterDetailsViewController.self) { (resolver, model: CharacterModel) in
+            let viewModel = resolver.resolveUnwrapping(CharacterDetailsViewModelType.self, argument: model)
+            return CharacterDetailsViewController(viewModel: viewModel)
         }
     }
 }

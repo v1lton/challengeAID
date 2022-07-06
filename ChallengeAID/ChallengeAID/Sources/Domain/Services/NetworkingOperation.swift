@@ -58,6 +58,7 @@ public class NetworkingOperation: NetworkingOperationType {
             
             guard error == nil else {
                 let error = NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch request"])
+                completion(.failure(error))
                 return
             }
             guard response != nil,

@@ -44,7 +44,15 @@ class ComicsCoordinator: ComicsCoordinatorType {
 
 extension ComicsCoordinator: ComicsViewControllerDelegate {
     func comicsViewController(didTapComic comic: ComicModel) {
-        let detailsViewController = factory.makeDetailsViewController(.init(comic: comic))
+        let detailsViewController = factory.makeComicDetailsViewController(.init(comic: comic))
+        detailsViewController.delegate = self
         navigationController.pushViewController(detailsViewController, animated: true)
+    }
+}
+
+extension ComicsCoordinator: ComicDetailsViewControllerDelegate {
+    func comicsDetailsViewController(didTapCharacter character: CharacterModel) {
+        let characterDetailsViewController = factory.makeCharacterDetailsViewController(character)
+        navigationController.pushViewController(characterDetailsViewController, animated: true)
     }
 }

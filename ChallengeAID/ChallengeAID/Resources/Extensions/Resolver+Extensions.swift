@@ -21,11 +21,4 @@ extension Resolver {
         }
         fatalError("\(serviceType) resolution failed")
     }
-
-    public func resolveUnwrapping<Service, Arg1, Arg2>(_ serviceType: Service.Type, arguments arg1: Arg1, _ arg2: Arg2) -> Service {
-        if let resolution = resolve(serviceType, arguments: arg1, arg2) {
-            return resolution
-        }
-        fatalError("\(serviceType) resolution failed")
-    }
 }

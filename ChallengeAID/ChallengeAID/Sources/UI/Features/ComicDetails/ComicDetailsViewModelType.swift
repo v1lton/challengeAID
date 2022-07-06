@@ -24,4 +24,5 @@ protocol ComicDetailsViewModelType {
     func getTableViewHeight() -> CGFloat
     func retrieveCharacters()
     func getNumberOfSections() -> Int
+    func getCharacter(at index: Int) -> CharacterModel?
 }

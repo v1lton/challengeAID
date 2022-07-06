@@ -11,6 +11,7 @@ protocol AppFactoryType {
     func makeComicsCoordinator(with navigationController: UINavigationController) -> ComicsCoordinatorType
     func makeFavoritesCoordinator(with navigationController: UINavigationController) -> FavoritesCoordinatorType
     func makeComicsViewController() -> ComicsViewController
-    func makeDetailsViewController(_ model: ComicDetailsModel) -> ComicDetailsViewController
+    func makeComicDetailsViewController(_ model: ComicDetailsModel) -> ComicDetailsViewController
     func makeFavoritesViewController() -> FavoritesViewController
+    func makeCharacterDetailsViewController(_ model: CharacterModel) -> CharacterDetailsViewController
 }
