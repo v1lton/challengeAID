@@ -34,7 +34,6 @@
 		49059C32287113D400E779AC /* ComicsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C31287113D400E779AC /* ComicsViewControllerDelegate.swift */; };
 		49059C34287113E600E779AC /* ComicsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C33287113E600E779AC /* ComicsViewModelProtocol.swift */; };
 		49059C36287113F300E779AC /* ComicsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C35287113F300E779AC /* ComicsViewState.swift */; };
-		49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */; };
 		49059C3B2871EB2500E779AC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 49059C3A2871EB2500E779AC /* RxSwift */; };
 		49059C3F287213BC00E779AC /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C3E287213BC00E779AC /* EntityManager.swift */; };
 		49059C4128721C4E00E779AC /* ComicObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49059C4028721C4E00E779AC /* ComicObjectManager.swift */; };
@@ -109,7 +108,6 @@
 		49059C31287113D400E779AC /* ComicsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		49059C33287113E600E779AC /* ComicsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewModelProtocol.swift; sourceTree = "<group>"; };
 		49059C35287113F300E779AC /* ComicsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewState.swift; sourceTree = "<group>"; };
-		49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewControllerProtocol.swift; sourceTree = "<group>"; };
 		49059C3E287213BC00E779AC /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		49059C4028721C4E00E779AC /* ComicObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicObjectManager.swift; sourceTree = "<group>"; };
 		49059C4728722FB400E779AC /* ComicDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsViewController.swift; sourceTree = "<group>"; };
@@ -348,7 +346,6 @@
 				49059C31287113D400E779AC /* ComicsViewControllerDelegate.swift */,
 				49059C33287113E600E779AC /* ComicsViewModelProtocol.swift */,
 				49059C35287113F300E779AC /* ComicsViewState.swift */,
-				49059C372871141300E779AC /* ComicsViewControllerProtocol.swift */,
 			);
 			path = Comics;
 			sourceTree = "<group>";
@@ -578,7 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49059C2E287113B200E779AC /* ComicsViewController.swift in Sources */,
-				49059C382871141300E779AC /* ComicsViewControllerProtocol.swift in Sources */,
 				49059C062870AA1500E779AC /* AppCoordinator.swift in Sources */,
 				49059C36287113F300E779AC /* ComicsViewState.swift in Sources */,
 				49059C4C287230A400E779AC /* ComicDetailsModel.swift in Sources */,

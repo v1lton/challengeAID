@@ -9,7 +9,7 @@ import CoreData
 import RxSwift
 import UIKit
 
-class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
+class ComicsViewController: UIViewController {
     
     // MARK: - PRIVATE PROPERTIES
     

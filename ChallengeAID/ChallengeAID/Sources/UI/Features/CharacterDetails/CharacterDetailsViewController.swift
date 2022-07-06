@@ -7,8 +7,6 @@
 
 import UIKit
 
-protocol CharacterDetailsViewControllerType { }
-
 class CharacterDetailsViewController: UIViewController {
     
     // MARK: - PRIVATE PROPERTIES

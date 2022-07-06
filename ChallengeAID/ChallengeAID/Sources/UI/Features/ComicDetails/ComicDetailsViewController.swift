@@ -10,8 +10,6 @@ import RxSwift
 import SDWebImage
 import UIKit
 
-protocol ComicDetailsViewControllerProtocol { }
-
 protocol ComicDetailsViewControllerDelegate: AnyObject {
     func comicsDetailsViewController(didTapCharacter character: CharacterModel)
 }
