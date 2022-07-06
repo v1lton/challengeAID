@@ -1,6 +1,6 @@
 # Marvel Challenge
 
-This is a iOS app created for a programming challenge. I used Swift and the Marvel Developer API for searching for Marvel Comics.
+iOS pure-Swift app created for a programming challenge. I used UIKit and the Marvel Developer API for searching for Marvel Comics.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ This is a iOS app created for a programming challenge. I used Swift and the Marv
 
 ## Architecture
 
-The app architecture were build considering oriented programming concepts. This app is using MVVM, with Coordinator pattern to navigate between screens. All views are made programmatically using the UIKit framework and work in light and dark modes.
+The app architecture were build considering oriented programming concepts. This app is using MVVM, with Coordinator pattern to navigate between screens. All views are made programmatically using the UIKit framework and work in light and dark modes. Data is persisted with Core Data, the networking layer was created using URLSession.
 
 ## Dependencies
 
