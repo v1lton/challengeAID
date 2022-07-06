@@ -28,4 +28,12 @@ struct EntityCellModel {
         self.imageExtension = imageExtension
         self.isFavorite = isFavorite
     }
+    
+    func getImageUrl() -> String {
+        guard let imagePath = imagePath,
+              let imageExtension = imageExtension else {
+            return ""
+        }
+        return "\(imagePath)/portrait_fantastic.\(imageExtension)"
+    }
 }

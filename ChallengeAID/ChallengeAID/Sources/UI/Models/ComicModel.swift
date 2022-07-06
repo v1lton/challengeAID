@@ -33,6 +33,14 @@ public struct ComicModel {
         self.creators = creators
         self.isFavorite = isFavorite
     }
+    
+    func getImageUrl() -> String {
+        guard let imagePath = imagePath,
+              let imageExtension = imageExtension else {
+            return ""
+        }
+        return "\(imagePath)/landscape_incredible.\(imageExtension)"
+    }
 }
 
 extension ComicModel {

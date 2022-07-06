@@ -144,8 +144,8 @@ class ComicDetailsViewController: UIViewController {
     }
     
     private func setupComponents() {
-        setImage()
         let model = viewModel.getComic()
+        setImage(for: model.getImageUrl())
         detailsTitle.text = model.title
         detailsDescription.text = model.description
         favoriteDetailsSwitch.isOn = model.isFavorite
@@ -246,11 +246,11 @@ class ComicDetailsViewController: UIViewController {
     
     // MARK: - PRIVATE METHODS
     
-    private func setImage() {
-        guard let imagePath = viewModel.getComic().imagePath,
-              let imageExtension = viewModel.getComic().imageExtension else { return }
-        let fullPath = "\(imagePath)/landscape_incredible.\(imageExtension)" //TODO: Improve it
-        imageView.sd_setImage(with: URL(string: fullPath))
+    private func setImage(for url: String) {
+        guard let url = URL(string: url) else {
+            return
+        }
+        imageView.sd_setImage(with: url)
     }
     
     @objc private func switchChanged(_ sender: UISwitch) {

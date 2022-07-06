@@ -28,6 +28,7 @@ class EntityTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        imageView.image = UIImage(named: "portrait_placeholder")
         return imageView
     }()
     
@@ -77,9 +78,7 @@ class EntityTableViewCell: UITableViewCell {
     func setupCell(with model: EntityCellModel) {
         self.title.text = model.title
         self.details.text = model.description
-        let fullPath = "\(model.imagePath ?? "")/portrait_fantastic.\(model.imageExtension ?? "")" //TODO: Improve it
-        self.picture.sd_setImage(with: URL(string: fullPath),
-                                 placeholderImage: UIImage(named: "portrait_placeholder")) //TODO: fix it
+        setImage(for: model.getImageUrl())
     }
     
     // MARK: - SETUP
@@ -103,5 +102,11 @@ class EntityTableViewCell: UITableViewCell {
             containerStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
         ])
+    }
+    
+    private func setImage(for url: String) {
+        if let url = URL(string: url) {
+            self.picture.sd_setImage(with: url)
+        }
     }
 }

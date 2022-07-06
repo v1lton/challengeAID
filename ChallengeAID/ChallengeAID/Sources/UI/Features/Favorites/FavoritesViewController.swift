@@ -138,7 +138,9 @@ extension FavoritesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EntityTableViewCell //TODO: fix force cast
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EntityTableViewCell else {
+            return UITableViewCell()
+        }
         let comics = viewModel.getComics()
         guard let comic = comics?[indexPath.row] else { return cell }
         cell.setupCell(with: .init(title: comic.title,
