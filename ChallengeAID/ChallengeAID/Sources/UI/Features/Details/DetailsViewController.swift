@@ -32,6 +32,7 @@ class DetailsViewController: UIViewController {
     private lazy var imageView: UIImageView = {
         let image = UIImageView(frame: .zero)
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(named: "landscape_placeholder")
         return image
     }()
     
