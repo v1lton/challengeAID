@@ -15,16 +15,28 @@ class EntityTableViewCell: UITableViewCell {
     
     // MARK: - UI
     
-    private lazy var containerView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var containerStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .top
+        stackView.spacing = 8
+        return stackView
     }()
     
     private lazy var picture: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         return imageView
+    }()
+    
+    private lazy var titleAndDescriptionStackView: UIStackView = {
+        let stack = UIStackView(frame: .zero)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.spacing = 8
+        return stack
     }()
     
     private lazy var title: UILabel = {
@@ -73,36 +85,23 @@ class EntityTableViewCell: UITableViewCell {
     // MARK: - SETUP
     
     private func setupComponents() {
-        containerView.backgroundColor = .systemBackground
+        containerStackView.backgroundColor = .systemBackground
     }
     
     private func addViewHierarchy() {
-        addSubview(containerView)
-        containerView.addSubview(title)
-        containerView.addSubview(picture)
-        containerView.addSubview(details)
+        addSubview(containerStackView)
+        containerStackView.addArrangedSubview(picture)
+        containerStackView.addArrangedSubview(titleAndDescriptionStackView)
+        titleAndDescriptionStackView.addArrangedSubview(title)
+        titleAndDescriptionStackView.addArrangedSubview(details)
     }
     
     private func constraintUI() {
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            
-            picture.topAnchor.constraint(equalTo: containerView.topAnchor),
-            picture.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            picture.heightAnchor.constraint(equalToConstant: 150),
-            picture.widthAnchor.constraint(equalToConstant: 100),
-            
-            title.topAnchor.constraint(equalTo: containerView.topAnchor),
-            title.leadingAnchor.constraint(equalTo: picture.trailingAnchor, constant: 8),
-            title.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            title.heightAnchor.constraint(equalToConstant: 20),
-            
-            details.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
-            details.leadingAnchor.constraint(equalTo: picture.trailingAnchor, constant: 8),
-            details.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            containerStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            containerStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
         ])
     }
 }

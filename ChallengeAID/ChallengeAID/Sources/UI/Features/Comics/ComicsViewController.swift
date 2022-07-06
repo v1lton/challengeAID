@@ -27,7 +27,8 @@ class ComicsViewController: UIViewController, ComicsViewControllerProtocol {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(EntityTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.rowHeight = 182
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 182
         tableView.delegate = self
         tableView.dataSource = self
         return tableView

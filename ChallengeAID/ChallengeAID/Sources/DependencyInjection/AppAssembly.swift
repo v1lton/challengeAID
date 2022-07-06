@@ -57,6 +57,11 @@ class AppAssembly: Assembly {
             let comicObjectManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
             return ComicsUseCase(networking: networking, comicObjectManager: comicObjectManager)
         }
+        
+        container.register(CharactersUseCaseType.self) { resolver in
+            let networking = resolver.resolveUnwrapping(NetworkingOperationProtocol.self)
+            return CharactersUseCase(networking: networking)
+        }
 
         // MARK: - ComicsViewController
         
@@ -75,7 +80,10 @@ class AppAssembly: Assembly {
         
         container.register(DetailsViewModelProtocol.self) { (resolver, model: DetailsModel) in
             let comicManager = resolver.resolveUnwrapping(ComicObjectManagerType.self)
-            return DetailsViewModel(model: model, comicManager: comicManager)
+            let charactersUseCase = resolver.resolveUnwrapping(CharactersUseCaseType.self)
+            return DetailsViewModel(model: model,
+                                    comicManager: comicManager,
+                                    charactersUseCase: charactersUseCase)
         }
         
         container.register(DetailsViewController.self) { (resolver, model: DetailsModel) in

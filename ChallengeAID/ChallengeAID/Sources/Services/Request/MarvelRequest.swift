@@ -46,8 +46,8 @@ struct MarvelRequest: Request {
         switch cases {
         case .comics:
             return "/v1/public/comics"
-        case .characters:
-            return "/v1/public/characters"
+        case .characters(let id):
+            return "/v1/public/characters/\(id)"
         }
     }
     
@@ -64,8 +64,7 @@ struct MarvelRequest: Request {
         case .comics(let request):
             queryItems.append(contentsOf: request.asQueryItens())
             return queryItems
-        case .characters(let characterId):
-            queryItems.append(URLQueryItem(name: "characterId", value: characterId))
+        case .characters:
             return queryItems
         }
     }

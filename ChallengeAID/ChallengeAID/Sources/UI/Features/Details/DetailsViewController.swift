@@ -5,8 +5,10 @@
 //  Created by Wilton Ramos da Silva on 03/07/22.
 //
 
-import UIKit
+
+import RxSwift
 import SDWebImage
+import UIKit
 
 protocol DetailsViewControllerProtocol { }
 
@@ -15,7 +17,9 @@ class DetailsViewController: UIViewController {
     // MARK: - PRIVATE PROPERTIES
     
     private let viewModel: DetailsViewModelProtocol
-    private let reuseIdentifier = "TableViewCell"
+    private let disposeBag = DisposeBag()
+    private let reuseCustomIdentifier = "EntityTableViewCell"
+    private let reuseDefaultIdentifier = "DefaultTableViewCell"
     
     // MARK: - UI
     
@@ -49,10 +53,30 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
-    private lazy var detailsSwitch: UISwitch = {
+    private lazy var favoriteStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private lazy var favoriteLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .none
+        label.numberOfLines = 1
+        label.text = "Favorite"
+        label.textAlignment = .right
+        return label
+    }()
+    
+    private lazy var favoriteDetailsSwitch: UISwitch = {
         let detailsSwitch = UISwitch()
         detailsSwitch.translatesAutoresizingMaskIntoConstraints = false
         detailsSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        detailsSwitch.onTintColor = .systemRed
         return detailsSwitch
     }()
     
@@ -67,11 +91,21 @@ class DetailsViewController: UIViewController {
     private lazy var charactersTableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseDefaultIdentifier)
+        tableView.register(EntityTableViewCell.self, forCellReuseIdentifier: reuseCustomIdentifier)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 182
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
         return tableView
+    }()
+    
+    private lazy var spinner: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isHidden = true
+        return indicator
     }()
     
     // MARK: - LIFE CYCLE
@@ -90,6 +124,8 @@ class DetailsViewController: UIViewController {
         setupComponents()
         buildViewHierarchy()
         constraintUI()
+        bindObservables()
+        viewModel.retrieveCharacters()
     }
     
     // MARK: - SETUP
@@ -101,21 +137,32 @@ class DetailsViewController: UIViewController {
         let model = viewModel.getComic()
         detailsTitle.text = model.title
         detailsDescription.text = model.description
-        detailsSwitch.isOn = model.isFavorite
+        favoriteDetailsSwitch.isOn = model.isFavorite
     }
     
     private func buildViewHierarchy() {
         view.addSubview(scrollView)
+        view.addSubview(spinner)
+        
         scrollView.addSubview(bodyStackView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(charactersTableView)
+        
         bodyStackView.addArrangedSubview(detailsTitle)
         bodyStackView.addArrangedSubview(detailsDescription)
-        bodyStackView.addArrangedSubview(detailsSwitch)
+        bodyStackView.addArrangedSubview(favoriteStackView)
+        
+        favoriteStackView.addArrangedSubview(favoriteLabel)
+        favoriteStackView.addArrangedSubview(favoriteDetailsSwitch)
     }
     
     private func constraintUI() {
         NSLayoutConstraint.activate([
+            spinner.topAnchor.constraint(equalTo: view.topAnchor),
+            spinner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            spinner.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            spinner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -133,9 +180,57 @@ class DetailsViewController: UIViewController {
             charactersTableView.topAnchor.constraint(equalTo: bodyStackView.bottomAnchor, constant: 16),
             charactersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             charactersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            charactersTableView.heightAnchor.constraint(equalToConstant: CGFloat(viewModel.getTableViewCount() * 50)),
+            charactersTableView.heightAnchor.constraint(equalToConstant: viewModel.getTableViewHeight()),
             charactersTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
+    }
+    
+    private func bindObservables() {
+        viewModel.viewState
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] state in
+                self?.handleViewState(state)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - HANDLERS
+    
+    private func handleViewState(_ viewState: DetailsViewState) {
+        switch viewState {
+        case .loading:
+            handleLoading()
+        case .success:
+            handleContent()
+        case .error(let error):
+            handleError(error)
+        }
+    }
+    
+    private func handleLoading() {
+        startScreenLoadingAnimation()
+    }
+    
+    private func handleContent() {
+        stopScreenLoadingAnimation()
+        charactersTableView.reloadData()
+    }
+    
+    private func startScreenLoadingAnimation() {
+        spinner.isHidden = false
+        scrollView.isHidden = true
+        spinner.startAnimating()
+    }
+    
+    private func stopScreenLoadingAnimation() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        scrollView.isHidden = false
+        charactersTableView.reloadData()
+    }
+    
+    private func handleError(_ error: Error) {
+        charactersTableView.isHidden = true
     }
     
     // MARK: - PRIVATE METHODS
@@ -175,21 +270,25 @@ extension DetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
         if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseCustomIdentifier, for: indexPath) as! EntityTableViewCell //TODO: fix force cast
             let characters = viewModel.getCharacters()
             guard let character = characters?[indexPath.row] else { return cell }
-            cell.textLabel?.text = character.name
-            cell.detailTextLabel?.text = character.role
+            cell.setupCell(with: .init(title: character.name,
+                                       description: character.description,
+                                       imagePath: character.imagePath,
+                                       imageExtension: character.imageExtension,
+                                       isFavorite: false))
+            return cell
         } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseDefaultIdentifier, for: indexPath)
             let creators = viewModel.getCreators()
             guard let creator = creators?[indexPath.row] else { return cell }
             cell.textLabel?.text = creator.name
             cell.detailTextLabel?.text = creator.role
+            return cell
         }
-        
-        return cell
     }
 }
 
